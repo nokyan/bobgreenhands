@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <WarningLevel>0</WarningLevel>
+        <RootNamespace>BobGreenhands</RootNamespace>
+        <MonoGamePlatform>DesktopGL</MonoGamePlatform>
+        <Nullable>enable</Nullable>
+        <LangVersion>8.0</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Nez\Nez.Portable\Nez.DotNetCore.csproj" />
+        <ProjectReference Include="..\Nez\Nez.FarseerPhysics\Nez.FarseerPhysics.DotNetCore.csproj" />
+        <ProjectReference Include="..\Nez\Nez.ImGui\Nez.ImGui.DotNetCore.csproj" />
+        <ProjectReference Include="..\Nez\Nez.Persistence\Nez.Persistence.DotNetCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <MonoGameContentReference Include="Content\Content.mgcb" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <EmbeddedResource Include="../icon.bmp">
+            <LogicalName>Icon.bmp</LogicalName>
+        </EmbeddedResource>
+    
+        <EmbeddedResource Include="../icon.ico">
+            <LogicalName>Icon.ico</LogicalName>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="Content\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <!-- TODO: Make this look better at some point -->
+    <Target Name="CompileFNA3D" BeforeTargets="BeforeBuild">
+		<Message Importance="High" Text="FNA3D not found! Please read this project's README.md to find out how to build FNA3D on Windows!" Condition="!Exists('..\Nez\Modules\FNA3D\libFNA3D.dll') And '$(OS)' == 'Windows_NT'" />
+		<Message Importance="High" Text="FNA3D not found; compiling..." Condition="!Exists('..\Nez\Modules\FNA3D\libFNA3D.dylib') And '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'" />
+		<Exec Command="cmake . ; make" WorkingDirectory="..\Nez\Modules\FNA3D" Condition="!Exists('..\Nez\Modules\FNA3D\libFNA3D.dylib') And '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'" />
+    </Target>
+
+    <ItemGroup>
+        <Content Include="..\Nez\Modules\FNA3D\lib*.*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Nez\Modules\FNA\FNA.Core.csproj" />
+    </ItemGroup>
+
+    <!-- Includes Nez default effects and textures -->
+    <ItemGroup>
+        <Content Include="../Nez/DefaultContent/FNAEffects/**/*.fxb">
+            <Link>Content/nez/effects/%(RecursiveDir)%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="../Nez/DefaultContent/textures/**/*.xnb">
+            <Link>Content/nez/textures/%(RecursiveDir)%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="commandlineparser" Version="2.6.0" />
+      <PackageReference Include="Discord.Net.RPC" Version="1.0.2" />
+      <PackageReference Include="nlog" Version="4.7.3" />
+      <PackageReference Include="semver" Version="2.0.5" />
+    </ItemGroup>
+
+</Project>
