@@ -46,18 +46,14 @@ namespace BobGreenhands.Scenes
             _table.Row();
 
             RefreshList();
-            _list.SetScale(4f);
             ScrollPane scrollPane = new ScrollPane(_list);
-            _list.SetScale(4f);
             scrollPane.SetScrollSpeed(1f);
             scrollPane.SetSmoothScrolling(true);
-            //scrollPane.SetScale(4f);
             Container scrollPaneContainer = new Container();
             scrollPaneContainer.AddElement(scrollPane);
             scrollPaneContainer.SetScale(4f);
             scrollPaneContainer.FillParent = true;
-            _table.Add(new Container(scrollPane)).Expand().Fill().Space(25f);
-            _list.SetScale(4f);
+            _table.Add(scrollPane).Expand().Fill().Space(25f);
             Game.SubscribeToInputHandler(this);
 
             _table.Row();
