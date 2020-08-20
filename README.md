@@ -9,11 +9,11 @@ This game is in no way an official successor the the Alice Greenfingers series, 
 
 ## Is the game already finished?
 
-Hell no, it's still in very early developement and while you can """play""" it, right now there is not much besides planting strawberries from a jar of infinite strawberry seeds and watch them grow and moving the main character, Bob, around.
+Hell no, it's still in very early developement and while you can """play""" it, right now there is not much besides planting strawberries and watch them grow and moving the main character, Bob, around.
 
 ## Requirements and supported architectures/operating systems
 
-To run this game, you need an x64 processor (it might run on x86, it might run on ARM, but I really can't be bothered to also support those architectures, feel free to mess around with it though), a graphics card preferably from this century and around a hundred megabytes of storage. If your computer manages to run Windows 10 (or even Windows 7) or any modern GNU/Linux distribution, it should run.
+To run this game, you need an x64 processor (it might run on x86, it might run on ARM, but I really can't be bothered to also support those architectures, feel free to mess around with it though), a graphics card preferably from this century and around a hundred megabytes of storage. If your computer manages to run Windows 10 (or even Windows 7) or any modern GNU/Linux distribution, the game should run.
 You also need [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) or higher installed on your device.
 
 .NET Core also supports BSD and macOS but I can't guarantee support for both operating systems as I don't have an Apple device (and don't plan on either buying one or breaking Apple's EULA) nor any kind of BSD installed.
@@ -26,7 +26,7 @@ Requirements:
 
 - [.NET Core Runtime 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) or higher if you have a prebuilt version of the game
 - [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) (includes the SDK) or higher for building the game
-- ``cmake`` and ``make`` for building FNA3D on Linux (and presumably macOS/OS X?)
+- ``cmake``, ``make`` and ``gcc`` for building FNA3D on GNU/Linux (and presumably macOS/OS X?)
 - ``faudio``
 - Visual Studio 2010 for building FNA3D on Windows - **[read more](https://github.com/FNA-XNA/FNA3D/blob/master/visualc/README)**
 
