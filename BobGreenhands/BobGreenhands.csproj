@@ -16,10 +16,6 @@
         <ProjectReference Include="..\Nez\Nez.ImGui\Nez.ImGui.DotNetCore.csproj" />
         <ProjectReference Include="..\Nez\Nez.Persistence\Nez.Persistence.DotNetCore.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-        <MonoGameContentReference Include="Content\Content.mgcb" />
-    </ItemGroup>
     
     <ItemGroup>
         <EmbeddedResource Include="../icon.bmp">
