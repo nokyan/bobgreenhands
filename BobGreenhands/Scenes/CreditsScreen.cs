@@ -25,7 +25,7 @@ namespace BobGreenhands.Scenes
             table.Row();
             table.Add(new Label(Language.Translate("art") + "ManicRobot & MarsFreak", Game.NormalSkin).SetWrap(true).SetFontScale(3f)).SetFillX().SetExpandX().SetPadTop(Spacing).SetSpaceBottom(Spacing);
             table.Row();
-            table.Add(new Label(Language.Translate("music") + "James Hammond (https://www.jameshammondrf.bandcamp.com, CC BY-SA 3.0)", Game.NormalSkin).SetWrap(true).SetFontScale(3f)).SetFillX().SetExpandX().SetPadTop(Spacing).SetSpaceBottom(Spacing);
+            table.Add(new Label(Language.Translate("music") + "Composed by https://www.onemansymphony.bandcamp.com (CC BY 4.0)", Game.NormalSkin).SetWrap(true).SetFontScale(3f)).SetFillX().SetExpandX().SetPadTop(Spacing).SetSpaceBottom(Spacing);
             table.Row();
             table.Add(new Label(Language.Translate("sounds") + "Kenney.nl (https://www.kenney.nl, CC0 1.0)", Game.NormalSkin).SetWrap(true).SetFontScale(3f)).SetFillX().SetExpandX().SetPadTop(Spacing).SetSpaceBottom(Spacing);
             table.Row();
