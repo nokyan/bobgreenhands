@@ -71,8 +71,8 @@ namespace BobGreenhands.Persistence
             savegame.SavegameData.SavegameVersion = SavegameVersion;
             savegame.SavegameData.IsNew = true;
             savegame.SavegameData.Balance = 0.0;
-            savegame.SavegameData.MapWidth = 5;
-            savegame.SavegameData.MapHeight = 5;
+            savegame.SavegameData.MapWidth = 40;
+            savegame.SavegameData.MapHeight = 40;
             savegame.SavegameData.Tiles = new List<ushort>();
             // generate the map
             for (int x = 0; x < savegame.SavegameData.MapWidth * savegame.SavegameData.MapHeight; x++)
