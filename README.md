@@ -54,7 +54,7 @@ If it doesn't start the first time because it's unable to load shared library 'F
 
 ## Reporting bugs
 
-You found a bug in the game or your game crashed? Report it by opening an issue! Navigate to the left of this page to the "Issues" section, go to "List" and open a new issue there. Be sure to include crash reports and savegames (if available) in the issue so I can fix it faster. While you're there, if you have suggestions or ideas for the game, you can open another issue for that too.
+You found a bug in the game or your game crashed? Report it by opening an issue! Navigate to the "Issues" tab on top of the page and click the green "New issue" button. Be sure to include crash reports and savegames (if available) in the issue so I can fix it faster. While you're there, if you have suggestions or ideas for the game, you can open another issue for that too.
 
 ## Acknowledgements
 
