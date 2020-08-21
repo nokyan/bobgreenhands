@@ -63,4 +63,3 @@ Thanks to
 - [prime31](https://github.com/prime31) for building [Nez](https://github.com/prime31/Nez), an awesome Monogame/FNA 2D Framework
 - [jamesjoplin](https://github.com/jamesjoplin) for the [.NET Core compatible fork of Nez](https://github.com/jamesjoplin/Nez)
 - MarsFreak for helping out with the design
-
