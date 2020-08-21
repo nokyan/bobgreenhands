@@ -28,6 +28,8 @@ namespace BobGreenhands
             get; set;
         }
 
+        public static string LogFile;
+
         public static readonly string Name = "Bob Greenhands";
         public static readonly string OSInformation = Utils.EnvironmentUtils.GetFullOSName();
         public static readonly string CPUInformation = Utils.EnvironmentUtils.GetCPUName();
@@ -46,6 +48,7 @@ namespace BobGreenhands
             var arguments = Parser.Default.ParseArguments<Options>(args);
             string folder = "";
             bool debug = false;
+
             // if a custom game folder is given, use that, if not, use the default one. also set the debug bool
             arguments.WithParsed<Options>(o =>
             {
@@ -72,10 +75,12 @@ namespace BobGreenhands
             });
             GameFolder gameFolder = new GameFolder(folder);
 
+            LogFile = Path.Combine(gameFolder.LogFolder, DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + ".txt");
+
             // configure our logger
             var config = new NLog.Config.LoggingConfiguration();
             var logConsole = new NLog.Targets.ConsoleTarget("logConsole");
-            var logFile = new NLog.Targets.FileTarget("logFile") { FileName = Path.Combine(gameFolder.LogFolder, DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + ".txt") };
+            var logFile = new NLog.Targets.FileTarget("logFile") { FileName = LogFile };
 
             config.AddRule(LogLevel.Info, LogLevel.Fatal, logConsole);
             config.AddRule(LogLevel.Debug, LogLevel.Fatal, logFile);
