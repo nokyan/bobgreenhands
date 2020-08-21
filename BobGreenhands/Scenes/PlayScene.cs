@@ -244,7 +244,7 @@ namespace BobGreenhands.Scenes
                     {
                         CurrentSavegame.Save();
                         _log.Debug("Saved the game (Auto-Save)");
-                        Thread.Sleep(1000);
+                        Thread.Sleep(60000);
                     }
                 }
             });
