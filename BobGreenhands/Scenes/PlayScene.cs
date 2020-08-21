@@ -72,14 +72,22 @@ namespace BobGreenhands.Scenes
                     case LockedState.None:
                         CamPosLocked = false;
                         _selectedTileSpriteRenderer.Sprite = SelectedTileSprite;
+                        _selectedMapObjectRenderer.Sprite = SelectedTileSprite;
                         break;
                     case LockedState.TileLocked:
                         CamPosLocked = true;
                         _selectedTileSpriteRenderer.Sprite = LockedTileSprite;
+                        _selectedMapObjectRenderer.Sprite = SelectedTileSprite;
                         break;
                     case LockedState.ItemLocked:
                         CamPosLocked = false;
                         _selectedTileSpriteRenderer.Sprite = SelectedTileSprite;
+                        _selectedMapObjectRenderer.Sprite = SelectedTileSprite;
+                        break;
+                    case LockedState.MapObjectLocked:
+                        CamPosLocked = false;
+                        _selectedTileSpriteRenderer.Sprite = SelectedTileSprite;
+                        _selectedMapObjectRenderer.Sprite = LockedTileSprite;
                         break;
                     default:
                         break;
@@ -97,20 +105,20 @@ namespace BobGreenhands.Scenes
 
         private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
-        private static SpriteRenderer _selectedTileSpriteRenderer;
-
         private System.Threading.Tasks.Task _autoSave;
 
         private MapEntity _mapEntity;
+
         private Entity _selectedTileEntity;
+        private static SpriteRenderer _selectedTileSpriteRenderer;
+
+        private Entity _selectedMapObjectEntity;
+        private static SpriteRenderer _selectedMapObjectRenderer;
 
         private Texture2D _mapTexture;
 
         private TiledDrawable _background;
 
-        private Sprite _mapSprite;
-
-        private SpriteRenderer _mapSpriteRenderer;
         private SpriteRenderer _hotbarRenderer;
 
         private Point _selectedTilePoint = Point.Zero;
@@ -122,8 +130,6 @@ namespace BobGreenhands.Scenes
         private float _verticalCamMovement;
         private float _maxCameraXPos;
         private float _maxCameraYPos;
-
-        private List<MapObject> _selectionBlockingMapObjects = new List<MapObject>();
 
         private List<MapObject> _mapObjects = new List<MapObject>();
 
@@ -194,6 +200,27 @@ namespace BobGreenhands.Scenes
             _selectedTileSpriteRenderer.SetRenderLayer(SelectedTileRenderLayer);
             _selectedTileEntity.AddComponent(_selectedTileSpriteRenderer);
 
+            // mapobjects!
+            foreach(MapObject m in CurrentSavegame.SavegameData.MapObjectList)
+            {
+                _mapObjects.Add(m);
+                m.Initialize();
+                AddEntity(m);
+            }
+            RenderLayerRenderer mapObjectLayerRenderer = new RenderLayerRenderer(3, MapObjectRenderLayer);
+            AddRenderer(mapObjectLayerRenderer);
+            Bob = new Bob(CurrentSavegame.SavegameData.PlayerXPos, CurrentSavegame.SavegameData.PlayerYPos);
+            _mapObjects.Add(Bob);
+            AddEntity(Bob);
+            Camera.SetPosition(Bob.Position);
+
+            _selectedMapObjectEntity = CreateEntity("selectedMapObject");
+            RenderLayerRenderer selectedMapObjectRenderer = new RenderLayerRenderer(4, SelectedMapObjectRenderLayer);
+            AddRenderer(selectedMapObjectRenderer);
+            _selectedMapObjectRenderer = new SpriteRenderer(SelectedTileSprite);
+            _selectedMapObjectRenderer.SetRenderLayer(SelectedMapObjectRenderLayer);
+            _selectedMapObjectEntity.AddComponent(_selectedMapObjectRenderer);
+
             // ui stuff
             UICanvas.RenderLayer = BaseScene.UIRenderLayer;
             Table table = UICanvas.Stage.AddElement(new Table());
@@ -207,25 +234,7 @@ namespace BobGreenhands.Scenes
             SelectionBlockingUIElements.Add(Hotbar);
             table.Add(Hotbar).Left();
 
-            // mapobjects!
-            foreach(MapObject m in CurrentSavegame.SavegameData.MapObjectList)
-            {
-                _mapObjects.Add(m);
-                m.Initialize();
-                AddEntity(m);
-            }
-            RenderLayerRenderer mapObjectLayerRenderer = new RenderLayerRenderer(3, MapObjectRenderLayer);
-            AddRenderer(mapObjectLayerRenderer);
-            Bob = new Bob(CurrentSavegame.SavegameData.PlayerXPos, CurrentSavegame.SavegameData.PlayerYPos);
-            _mapObjects.Add(Bob);
-            AddEntity(Bob);
-            _selectionBlockingMapObjects.Add(Bob);
-            Camera.SetPosition(Bob.Position);
-
-            RenderLayerRenderer selectedMapObjectRenderer = new RenderLayerRenderer(4, SelectedMapObjectRenderLayer);
-            AddRenderer(selectedMapObjectRenderer);
-
-            UpdateSelectedTile();
+            UpdateSelectedThing();
 
             // save the game every minute
             _autoSave = new System.Threading.Tasks.Task(() =>
@@ -301,10 +310,8 @@ namespace BobGreenhands.Scenes
                     Camera.SetPosition(new Vector2(newXPos, newYPos));
                 }
             }
-            if (CurrentLockedState != LockedState.TileLocked)
-            {
-                UpdateSelectedTile();
-            }
+            if(CurrentLockedState == LockedState.None || CurrentLockedState == LockedState.ItemLocked)
+                UpdateSelectedThing();
 
 
             List<MapObject> toBeRandomTicked = new List<MapObject>();
@@ -327,16 +334,11 @@ namespace BobGreenhands.Scenes
         }
 
         /// <summary>
-        /// Find out, if an UI-blocking entity is in the way
+        /// Return the MapObject that's below the mouse cursor
         /// </summary>
-        private bool EntityIsBlocking()
+        private MapObject? GetBlockingMapObject()
         {
-            foreach (ISelectionBlocking i in SelectionBlockingUIElements)
-            {
-                if (i.HoveredOver())
-                    return true;
-            }
-            foreach (MapObject m in _selectionBlockingMapObjects)
+            foreach (MapObject m in _mapObjects)
             {
                 SpriteRenderer spriteRenderer = m.SpriteRenderer;
                 float minX = m.Position.X - spriteRenderer.Origin.X;
@@ -344,46 +346,76 @@ namespace BobGreenhands.Scenes
                 float minY = m.Position.Y - spriteRenderer.Origin.Y;
                 float maxY = m.Position.Y + (spriteRenderer.Height - spriteRenderer.Origin.Y);
                 if(Camera.MouseToWorldPoint().X > minX && Camera.MouseToWorldPoint().X < maxX && Camera.MouseToWorldPoint().Y > minY && Camera.MouseToWorldPoint().Y < maxY)
+                    return m;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Find out, if an UI-blocking entity is in the way
+        /// </summary>
+        private bool UIIsBlocking()
+        {
+            foreach (ISelectionBlocking i in SelectionBlockingUIElements)
+            {
+                if (i.HoveredOver())
                     return true;
             }
             return false;
         }
 
-        private void UpdateSelectedTile()
+        private void UpdateSelectedThing()
         {
-
-            if (EntityIsBlocking())
+            if(UIIsBlocking())
             {
                 _selectedTileEntity.Enabled = false;
+                _selectedMapObjectEntity.Enabled = false;
                 return;
             }
-
-            _selectedTileEntity.Enabled = true;
-            int xMapPos = (int)Math.Floor(Camera.MouseToWorldPoint().X / Game.TextureResolution) * Game.TextureResolution;
-            int yMapPos = (int)Math.Floor(Camera.MouseToWorldPoint().Y / Game.TextureResolution) * Game.TextureResolution;
-
-            _selectedTilePoint.X = xMapPos / Game.TextureResolution + (int)Math.Floor(CurrentSavegame.SavegameData.MapWidth / 2f);
-            _selectedTilePoint.Y = yMapPos / Game.TextureResolution + (int)Math.Floor(CurrentSavegame.SavegameData.MapHeight / 2f);
-
-            if(_selectedTilePoint.X < 0)
+            MapObject? blockingMapEntity = GetBlockingMapObject();
+            if (blockingMapEntity != null)
             {
                 _selectedTileEntity.Enabled = false;
+                SpriteRenderer spriteRenderer = blockingMapEntity.SpriteRenderer;
+                float X = (blockingMapEntity.Position.X - spriteRenderer.Origin.X) + spriteRenderer.Width / 2;
+                float Y = (blockingMapEntity.Position.Y - spriteRenderer.Origin.Y) + spriteRenderer.Height / 2;
+                _selectedMapObjectEntity.SetScale(1f);
+                Vector2 scale = new Vector2(spriteRenderer.Width / _selectedMapObjectRenderer.Width, spriteRenderer.Height / _selectedMapObjectRenderer.Height);
+                _selectedMapObjectEntity.SetScale(scale);
+                _selectedMapObjectEntity.Enabled = true;
+                _selectedMapObjectEntity.SetPosition(new Vector2(X, Y));
+                return;
             }
-            else if(_selectedTilePoint.X > CurrentSavegame.SavegameData.MapWidth - 1)
+            else
             {
-                _selectedTileEntity.Enabled = false;
-            }
+                _selectedTileEntity.Enabled = true;
+                _selectedMapObjectEntity.Enabled = false;
+                int xMapPos = (int)Math.Floor(Camera.MouseToWorldPoint().X / Game.TextureResolution) * Game.TextureResolution;
+                int yMapPos = (int)Math.Floor(Camera.MouseToWorldPoint().Y / Game.TextureResolution) * Game.TextureResolution;
 
-            if (_selectedTilePoint.Y < 0)
-            {
-                _selectedTileEntity.Enabled = false;
-            }
-            else if (_selectedTilePoint.Y > CurrentSavegame.SavegameData.MapHeight - 1)
-            {
-                _selectedTileEntity.Enabled = false;
-            }
+                _selectedTilePoint.X = xMapPos / Game.TextureResolution + (int)Math.Floor(CurrentSavegame.SavegameData.MapWidth / 2f);
+                _selectedTilePoint.Y = yMapPos / Game.TextureResolution + (int)Math.Floor(CurrentSavegame.SavegameData.MapHeight / 2f);
 
-            _selectedTileEntity.SetPosition(xMapPos + Game.TextureResolution/2, yMapPos + Game.TextureResolution/2);
+                if(_selectedTilePoint.X < 0)
+                {
+                    _selectedTileEntity.Enabled = false;
+                }
+                else if(_selectedTilePoint.X > CurrentSavegame.SavegameData.MapWidth - 1)
+                {
+                    _selectedTileEntity.Enabled = false;
+                }
+
+                if (_selectedTilePoint.Y < 0)
+                {
+                    _selectedTileEntity.Enabled = false;
+                }
+                else if (_selectedTilePoint.Y > CurrentSavegame.SavegameData.MapHeight - 1)
+                {
+                    _selectedTileEntity.Enabled = false;
+                }
+
+                _selectedTileEntity.SetPosition(xMapPos + Game.TextureResolution/2, yMapPos + Game.TextureResolution/2);
+            }
 
         }
 
@@ -455,28 +487,52 @@ namespace BobGreenhands.Scenes
 
         public void LeftMouseReleased()
         {
-            if(CurrentLockedState == LockedState.None && !EntityIsBlocking())
+            if(UIIsBlocking())
+                return;
+            switch(CurrentLockedState)
             {
-                CurrentLockedState = LockedState.TileLocked;
-            }
-            else if(CurrentLockedState == LockedState.TileLocked && !EntityIsBlocking())
-            {
-                CurrentLockedState = LockedState.None;
-            }
-            else if(CurrentLockedState == LockedState.ItemLocked && !EntityIsBlocking())
-            {
-                Item item = LockedInventory.GetItemAt(LockedIndex).Item;
-                int x = _selectedTilePoint.X;
-                int y = _selectedTilePoint.Y;
-                // if mouse is out of bounds
-                if(x < 0 || x >= CurrentSavegame.SavegameData.MapWidth || y < 0 || y >= CurrentSavegame.SavegameData.MapWidth)
-                    return;
-                TileType tileType = CurrentSavegame.GetTileAt(x, y);
-                Vector2 target = new Vector2(Camera.MouseToWorldPoint().X, Camera.MouseToWorldPoint().Y);
-                Location location = Location.FromEntityCoordinates(target).SetToCenterOfTile();
-                Action function = () => {if(item.UsedOnTile(x, y, tileType, this)) { RefreshMap(); Hotbar.RefreshTexts(); }};
-                Bob.EnqueueTask(new Task(location.EntityCoordinates, function));
-                Bob.IsMoving = true;
+                case LockedState.None:
+                    if(GetBlockingMapObject() == null)
+                        CurrentLockedState = LockedState.TileLocked;
+                    else 
+                        CurrentLockedState = LockedState.MapObjectLocked;
+                    break;
+                case LockedState.TileLocked:
+                    CurrentLockedState = LockedState.None;
+                    break;
+                case LockedState.MapObjectLocked:
+                    CurrentLockedState = LockedState.None;
+                    break;
+                case LockedState.ItemLocked:
+                    Item item = LockedInventory.GetItemAt(LockedIndex).Item;
+                    MapObject blockingMapObject = GetBlockingMapObject();
+                    if(blockingMapObject == null) {
+                        int x = _selectedTilePoint.X;
+                        int y = _selectedTilePoint.Y;
+                        // if mouse is out of bounds
+                        if(x < 0 || x >= CurrentSavegame.SavegameData.MapWidth || y < 0 || y >= CurrentSavegame.SavegameData.MapWidth)
+                            return;
+                        TileType tileType = CurrentSavegame.GetTileAt(x, y);
+                        Vector2 target = new Vector2(Camera.MouseToWorldPoint().X, Camera.MouseToWorldPoint().Y);
+                        Location location = Location.FromEntityCoordinates(target).SetToCenterOfTile();
+                        Action function = () => {if(item.UsedOnTile(x, y, tileType, this)) { RefreshMap(); Hotbar.RefreshTexts(); }};
+                        Bob.EnqueueTask(new Task(location.EntityCoordinates, function));
+                        Bob.IsMoving = true;
+                    }
+                    else
+                    {
+                        if(blockingMapObject == Bob)
+                        {
+                            item.UsedOnMapObject(blockingMapObject, this);
+                        }
+                        else
+                        {
+                            Action function = () => {item.UsedOnMapObject(blockingMapObject, this);};
+                            Bob.EnqueueTask(new Task(blockingMapObject.Position, function));
+                            Bob.IsMoving = true;
+                        }
+                    }
+                    break;
             }
         }
 
@@ -493,8 +549,8 @@ namespace BobGreenhands.Scenes
             int xPos = Input.RawMousePosition.X;
             int yPos = Input.RawMousePosition.Y;
 
-            // check if cursor is out of the window or if an entity is blocking
-            if (xPos < 0 || xPos > Screen.Width || yPos < 0 || yPos > Screen.Height || EntityIsBlocking())
+            // check if cursor is out of the window or if a UI element is blocking
+            if (xPos < 0 || xPos > Screen.Width || yPos < 0 || yPos > Screen.Height || UIIsBlocking())
                 return;
 
             float horizontalThreshhold = Screen.Width / 20f;
@@ -512,8 +568,8 @@ namespace BobGreenhands.Scenes
             if (yPos > Screen.Height - verticalThreshhold)
                 _verticalCamMovement = -(1 - ((Screen.Height - yPos) / verticalThreshhold)) * _maxCamSpeed;
 
-            if(CurrentLockedState != LockedState.TileLocked)
-                UpdateSelectedTile();
+            if(CurrentLockedState == LockedState.None || CurrentLockedState == LockedState.ItemLocked)
+                UpdateSelectedThing();
         }
 
         public void MouseScrolled(int delta)
@@ -526,7 +582,7 @@ namespace BobGreenhands.Scenes
 
         public void RightMouseReleased()
         {
-            if(CurrentLockedState == LockedState.None && !EntityIsBlocking())
+            if(CurrentLockedState == LockedState.None && !UIIsBlocking())
             {
                 Vector2 destination = new Vector2(Camera.MouseToWorldPoint().X, Camera.MouseToWorldPoint().Y);
                 Location location = Location.FromEntityCoordinates(destination);

@@ -1,4 +1,5 @@
 using System;
+using BobGreenhands.Map.MapObjects;
 using BobGreenhands.Map.Tiles;
 using BobGreenhands.Scenes;
 using BobGreenhands.Utils.CultureUtils;
@@ -34,6 +35,19 @@ namespace BobGreenhands.Map.Items
                 return true;
             }
             return false;
+        }
+
+        public override void UsedOnMapObject(MapObject mapObjects, PlayScene playScene)
+        {
+            if(Durability <= 0)
+            {
+                return;
+            }
+            if(mapObjects is Plant)
+            {
+                mapObjects.Destroy();
+                Durability--;
+            }
         }
     }
 }

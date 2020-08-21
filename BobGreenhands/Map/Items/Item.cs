@@ -1,3 +1,5 @@
+using System;
+using BobGreenhands.Map.MapObjects;
 using BobGreenhands.Map.Tiles;
 using BobGreenhands.Scenes;
 
@@ -21,6 +23,11 @@ namespace BobGreenhands.Map.Items
         {
             return false;
         }
+
+        /// <summary>
+        /// Called when the item has been used on a MapObject. 
+        /// </summary>
+        public virtual void UsedOnMapObject(MapObject mapObjects, PlayScene playScene) { }
 
         public abstract string? GetInfoString();
 
