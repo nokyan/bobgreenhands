@@ -50,7 +50,7 @@ Partially supported operating systems and architectures (it might work, it might
 
 **Right now you have to build FNA3D yourself on Windows until I've figured out how to put that into the BobGreenhands.csproj! Read more [here](https://github.com/FNA-XNA/FNA3D/blob/master/visualc/README).**
 Clone the repository **recursively** with ``git clone --recurse-submodules git@github.com:ManicRobot/bobgreenhands.git``, navigate into the newly created subfolder ``bobgreenhands/BobGreenhands`` and type ``dotnet run`` in your favorite terminal/command prompt. Proper installation is a thing that I'm not worried about just yet, I want to get the game in a functioning (and enjoyable) state before messing with details like that.
-If it doesn't start the first time because it's unable to load shared library 'FNA3D', just try running ``dotnet run`` again. If the issue persists, see, if FNA3D has been compiled. You might have to
+If it doesn't start the first time because it's unable to load shared library 'FNA3D', just try running ``dotnet run`` again. If the issue persists, see, if FNA3D has been compiled.
 
 ## Reporting bugs
 
