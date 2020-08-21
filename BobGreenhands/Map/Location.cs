@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using BobGreenhands.Scenes;
 
@@ -106,6 +107,12 @@ namespace BobGreenhands.Map
             newVector.X = (vector.X - width / 2) * Game.TextureResolution;
             newVector.Y = (vector.Y - height / 2) * Game.TextureResolution;
             return newVector;
+        }
+
+        public Location SetToCenterOfTile()
+        {
+            Coordinates = new Vector2((float)Math.Floor(Coordinates.X) + 0.5f, (float)Math.Floor(Coordinates.Y) + 0.5f);
+            return this;
         }
     }
 }

@@ -473,8 +473,9 @@ namespace BobGreenhands.Scenes
                     return;
                 TileType tileType = CurrentSavegame.GetTileAt(x, y);
                 Vector2 target = new Vector2(Camera.MouseToWorldPoint().X, Camera.MouseToWorldPoint().Y);
+                Location location = Location.FromEntityCoordinates(target).SetToCenterOfTile();
                 Action function = () => {if(item.UsedOnTile(x, y, tileType, this)) { RefreshMap(); Hotbar.RefreshTexts(); }};
-                Bob.EnqueueTask(new Task(target, function));
+                Bob.EnqueueTask(new Task(location.EntityCoordinates, function));
                 Bob.IsMoving = true;
             }
         }
