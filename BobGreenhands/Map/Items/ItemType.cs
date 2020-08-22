@@ -5,6 +5,7 @@ namespace BobGreenhands.Map.Items
         Unknown = 0,
         Shovel = 1,
         Box = 2,
-        StrawberrySeeds = 3
+        StrawberrySeeds = 3,
+        WateringCan = 4
     }
 }

@@ -37,7 +37,7 @@ namespace BobGreenhands.Map.Items
             return false;
         }
 
-        public override void UsedOnMapObject(MapObject mapObjects, PlayScene playScene)
+        public override void UsedOnMapObject(MapObject mapObject, PlayScene playScene)
         {
             if(Durability <= 0)
             {
