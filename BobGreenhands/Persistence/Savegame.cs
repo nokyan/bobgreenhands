@@ -93,6 +93,7 @@ namespace BobGreenhands.Persistence
             savegame.SavegameData.MapObjectList = new List<MapObject>();
             savegame.SavegameData.Hotbar = new List<Item>(10) {
                 new Shovel(),
+                new WateringCan(),
                 new StrawberrySeeds()
             };
             savegame.SavegameData.PlayerXPos = 20;

@@ -167,6 +167,8 @@ namespace BobGreenhands.Scenes
             ItemTextures[ItemType.Unknown] = FNATextureHelper.Load("img/tiles/unknown", Game.Content);
             ItemTextures[ItemType.Shovel] = FNATextureHelper.Load("img/items/shovel", Game.Content);
             ItemTextures[ItemType.StrawberrySeeds] = FNATextureHelper.Load("img/items/strawberry_seeds", Game.Content);
+            ItemTextures[ItemType.WateringCan] = FNATextureHelper.Load("img/items/watering_can", Game.Content);
+            ItemTextures[ItemType.BigWateringCan] = FNATextureHelper.Load("img/items/big_watering_can", Game.Content);
 
             // set up the background
             Entity backgroundEntity = CreateEntity("background");
@@ -529,7 +531,7 @@ namespace BobGreenhands.Scenes
                         }
                         else
                         {
-                            Action function = () => {item.UsedOnMapObject(blockingMapObject, this);};
+                            Action function = () => {item.UsedOnMapObject(blockingMapObject, this); Hotbar.RefreshTexts();};
                             Bob.EnqueueTask(new Task(blockingMapObject.Position, function));
                             Bob.IsMoving = true;
                         }
