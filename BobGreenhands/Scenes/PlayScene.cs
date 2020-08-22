@@ -506,6 +506,8 @@ namespace BobGreenhands.Scenes
                 case LockedState.ItemLocked:
                     Item item = LockedInventory.GetItemAt(LockedIndex).Item;
                     MapObject blockingMapObject = GetBlockingMapObject();
+                    if(item == null)
+                        return;
                     if(blockingMapObject == null) {
                         int x = _selectedTilePoint.X;
                         int y = _selectedTilePoint.Y;
