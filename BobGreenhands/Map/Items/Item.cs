@@ -27,7 +27,7 @@ namespace BobGreenhands.Map.Items
         /// <summary>
         /// Called when the item has been used on a MapObject. 
         /// </summary>
-        public virtual void UsedOnMapObject(MapObject mapObjects, PlayScene playScene) { }
+        public virtual void UsedOnMapObject(MapObject mapObject, PlayScene playScene) { }
 
         public abstract string? GetInfoString();
 
