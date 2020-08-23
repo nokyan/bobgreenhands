@@ -50,7 +50,7 @@ namespace BobGreenhands.Scenes
                 renderTarget.Dispose();
                 _backgroundDrawable = new Image(new SpriteDrawable(output), Scaling.None);
                 Game.GraphicsDevice.SetRenderTarget(null);
-                _backgroundThreshold = Math.Min(_backgroundDrawable.GetWidth() * _textureScale - Game.GraphicsDevice.Viewport.Width, _backgroundDrawable.GetHeight() * _textureScale - Game.GraphicsDevice.Viewport.Height);
+                _backgroundThreshold = Math.Min(_backgroundDrawable.GetWidth() - Game.GraphicsDevice.Viewport.Width, _backgroundDrawable.GetHeight() - Game.GraphicsDevice.Viewport.Height);
                 _backgroundDrawable.SetPosition(_backgroundX, _backgroundY);
             }
             backgroundUICanvas.Stage.AddElement(_backgroundDrawable);
@@ -70,8 +70,6 @@ namespace BobGreenhands.Scenes
                     return;
                 }
                 _backgroundDrawable.SetPosition(_backgroundDrawable.GetX() + 0.25f * _backgroundSpeedMultiplier * Time.DeltaTime * 60, _backgroundDrawable.GetY() + 0.5f * _backgroundSpeedMultiplier * Time.DeltaTime * 60);
-                _backgroundX = _backgroundDrawable.GetX();
-                _backgroundY = _backgroundDrawable.GetY();
             }
             else
             {
@@ -81,9 +79,9 @@ namespace BobGreenhands.Scenes
                     return;
                 }
                 _backgroundDrawable.SetPosition(_backgroundDrawable.GetX() - 0.25f * _backgroundSpeedMultiplier * Time.DeltaTime * 60, _backgroundDrawable.GetY() - 0.5f * _backgroundSpeedMultiplier * Time.DeltaTime * 60);
-                _backgroundX = _backgroundDrawable.GetX();
-                _backgroundY = _backgroundDrawable.GetY();
             }
+            _backgroundX = _backgroundDrawable.GetX();
+            _backgroundY = _backgroundDrawable.GetY();
         }
     }
 }
