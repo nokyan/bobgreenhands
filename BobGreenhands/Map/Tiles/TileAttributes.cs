@@ -17,6 +17,7 @@ namespace BobGreenhands.Map.Tiles
             TileType.SWFence,
             TileType.WEFence,
             TileType.WNFence,
+            TileType.BoundaryBush
         };
 
     }
