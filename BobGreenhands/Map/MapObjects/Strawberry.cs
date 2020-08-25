@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Nez.Persistence;
 using Nez.Sprites;
 using BobGreenhands.Scenes;
-
+using BobGreenhands.Utils.CultureUtils;
 
 namespace BobGreenhands.Map.MapObjects
 {
@@ -59,6 +59,17 @@ namespace BobGreenhands.Map.MapObjects
         public override void OnRandomTick(GameTime gameTime)
         {
             base.OnRandomTick(gameTime);
+        }
+
+        public override string GetInfoText()
+        {
+            string returnString = String.Format("{0}\n{1}\n{2}\n{3}", 
+                    Language.Translate("strawberryInfoText"),
+                    Language.Translate("water", (int) (Water * 100)),
+                    Language.Translate("fertilizer", (int) (Fertilizer * 100)),
+                    Language.Translate("growthValue", (int) (GrowthValue * 100))
+            );
+            return returnString;
         }
 
         public override void OnTick(GameTime gameTime)

@@ -127,6 +127,13 @@ namespace BobGreenhands.Scenes.UIElements
             if(Inventory != null)
                 Inventory.SelectedIndex = Inventory.GetIndexOf(this);
                 Selected.SetVisible(true);
+                try
+                {
+                    PlayScene.InfoElement.SetImage(PlayScene.ItemTextures[Item.GetItemType()]);
+                    PlayScene.InfoElement.SetText(Item.GetInfoText());
+                    PlayScene.InfoElement.SetVisible(true);
+                }
+                catch (NullReferenceException) { }
         }
 
         public void OnMouseExit()
@@ -135,6 +142,7 @@ namespace BobGreenhands.Scenes.UIElements
             if(Inventory != null)
                 Inventory.SelectedIndex = -1;
                 Selected.SetVisible(false);
+                PlayScene.InfoElement.SetVisible(false);
         }
 
         public bool OnMousePressed(Vector2 mousePos)

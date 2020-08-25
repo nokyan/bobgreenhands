@@ -50,8 +50,21 @@
     "discordRpc": "Discord RPC",
     "nez": "Nez (Framework 2D pour FNA) : ",
     "nezFork": "Fork compatible avec le .NET Core : ",
+    "water": "Eau : {0}%",
+    "fertilizer": "Engrais : {0}%",
+    "growthValue": "Croissance : {0}%",
+    "capacity": "Capacité : {0}/{1}",
+    "durability": "Durabilité : {0}/{1}",
+    "amount": "Quantité : {0}/{1}",
+    "fullyGrownParantheses": "(à part entière)",
+    "bobInfoText": "Bob Greenhands (c'est toi !)",
+    "strawberryInfoText": "Fraises",
     "strawberrySeeds": "Pépin de Fraise",
+    "strawberrySeedsDescription": "Une façon simple et peu coûteuse de commencer par l'agriculture.",
     "shovel": "Pelle",
+    "shovelDescription": "Une pelle simple mais robuste qui peut transformer l'herbe en terre agricole.",
     "wateringCan": "Arrosoir",
-    "bigWateringCan": "Grand Arrosoir"
+    "wateringCanDescription": "Un petit arrosoir qui ne peut pas contenir beaucoup d'eau.",
+    "bigWateringCan": "Grand Arrosoir",
+    "bigWateringCanDescription": "Peut contenir beaucoup plus d'eau que la petite variante."
 } 

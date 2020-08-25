@@ -4,7 +4,6 @@ using Nez;
 using Nez.Sprites;
 using Nez.Textures;
 using Nez.UI;
-using BobGreenhands.Utils.CultureUtils;
 using BobGreenhands.Utils;
 using BobGreenhands.Persistence;
 using BobGreenhands.Map;
@@ -52,7 +51,7 @@ namespace BobGreenhands.Scenes
 
         public const float MaxCamZoom = 1.25f;
         public const float MinCamZoom = 0.25f;
-        public const float CamZoomStep = 0.0625f;
+        public const float CamZoomStep = 0.1250f;
 
         public static Sprite SelectedTileSprite;
         public static Sprite LockedTileSprite;
@@ -102,6 +101,7 @@ namespace BobGreenhands.Scenes
         public static List<ISelectionBlocking> SelectionBlockingUIElements = new List<ISelectionBlocking>();
 
         public Hotbar Hotbar;
+        public static InfoElement InfoElement;
 
         private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -229,7 +229,11 @@ namespace BobGreenhands.Scenes
             table.SetFillParent(true);
             table.Pad(20);
             
-            table.Add(new TextButton(Language.Translate("menu"), Game.NormalSkin)).Expand().Top().Right();
+            //table.Add(new TextButton(Language.Translate("menu"), Game.NormalSkin)).Expand().Top().Right();
+            InfoElement = new InfoElement(FNATextureHelper.Load("img/ui/normal/info_element", Game.Content));
+            table.Add(InfoElement).Expand().Top().Left();
+            InfoElement.SetVisible(false);
+            SelectionBlockingUIElements.Add(InfoElement);
             table.Row();
 
             Hotbar = new Hotbar();
@@ -386,6 +390,9 @@ namespace BobGreenhands.Scenes
                 _selectedMapObjectEntity.SetScale(scale);
                 _selectedMapObjectEntity.Enabled = true;
                 _selectedMapObjectEntity.SetPosition(new Vector2(X, Y));
+                InfoElement.SetImage(spriteRenderer.Sprite);
+                InfoElement.SetText(blockingMapEntity.GetInfoText());
+                InfoElement.SetVisible(true);
                 return;
             }
             else
@@ -417,6 +424,7 @@ namespace BobGreenhands.Scenes
                 }
 
                 _selectedTileEntity.SetPosition(xMapPos + Game.TextureResolution/2, yMapPos + Game.TextureResolution/2);
+                InfoElement.SetVisible(false);
             }
 
         }

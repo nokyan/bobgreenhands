@@ -31,6 +31,6 @@ namespace BobGreenhands.Map.Items
 
         public abstract string? GetInfoString();
 
-        public abstract string? GetTooltipString();
+        public abstract string? GetInfoText();
     }
 }

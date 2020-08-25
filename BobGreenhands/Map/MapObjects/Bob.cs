@@ -6,7 +6,7 @@ using Nez.Textures;
 using Nez.Sprites;
 using Nez;
 using BobGreenhands.Utils;
-
+using BobGreenhands.Utils.CultureUtils;
 
 namespace BobGreenhands.Map.MapObjects
 {
@@ -93,6 +93,11 @@ namespace BobGreenhands.Map.MapObjects
 
         public override void OnRandomTick(GameTime gameTime)
         {
+        }
+
+        public override string GetInfoText()
+        {
+            return Language.Translate("bobInfoText");
         }
     }
 }

@@ -50,8 +50,21 @@
     "discordRpc": "Discord RPC",
     "nez": "Nez (2D-FNA-Framework): ",
     "nezFork": ".NET-Core-kompatibler Fork: ",
+    "water": "Wasser: {0}%",
+    "fertilizer": "Dünger: {0}%",
+    "growthValue": "Wachstum: {0}%",
+    "capacity": "Kapazität: {0}/{1}",
+    "durability": "Haltbarkeit: {0}/{1}",
+    "amount": "Anzahl: {0}/{1}",
+    "fullyGrownParantheses": "(ausgewachsen)",
+    "bobInfoText": "Bob Greenhands (das bist du!)",
+    "strawberryInfoText": "Erdbeeren",
     "strawberrySeeds": "Erdbeersamen",
+    "strawberrySeedsDescription": "Guter und günstiger Start in die Farmwelt.",
     "shovel": "Schaufel",
+    "shovelDescription": "Einfache, robuste Schaufel um Ackerboden herzustellen.",
     "wateringCan": "Gießkanne",
-    "bigWateringCan": "Große Gießkanne"
+    "wateringCanDescription": "Kleine Gießkanne, die nicht viel Wasser aufnehmen kann.",
+    "bigWateringCan": "Große Gießkanne",
+    "bigWateringCanDescription": "Kann viel mehr Wasser aufnehmen als die kleinere Variante."
 } 

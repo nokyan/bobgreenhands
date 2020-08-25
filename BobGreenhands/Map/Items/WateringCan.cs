@@ -19,9 +19,9 @@ namespace BobGreenhands.Map.Items
             Capacity = MaxCapacity;
         }
 
-        public override string? GetTooltipString()
+        public override string? GetInfoText()
         {
-            return Language.Translate("wateringCan");
+            return String.Format("{0}\n{1}\n{2}", Language.Translate("wateringCan"), Language.Translate("wateringCanDescription"), Language.Translate("capacity", "" + Capacity, "" + MaxCapacity));
         }
 
         public override bool UsedOnTile(int tileX, int tileY, TileType tile, PlayScene playScene)

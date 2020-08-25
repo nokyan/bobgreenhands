@@ -51,8 +51,21 @@
     "menu": "Menu",
     "nez": "Nez (2D FNA framework): ",
     "nezFork": ".NET Core compatible fork: ",
+    "water": "Water: {0}%",
+    "fertilizer": "Fertilizer: {0}%",
+    "growthValue": "Growth: {0}%",
+    "capacity": "Capacity: {0}/{1}",
+    "durability": "Durability: {0}/{1}",
+    "amount": "Amount: {0}/{1}",
+    "fullyGrownParantheses": "(fully grown)",
+    "bobInfoText": "Bob Greenhands (that's you!)",
+    "strawberryInfoText": "Strawberries",
     "strawberrySeeds": "Strawberry Seeds",
+    "strawberrySeedsDescription": "An easy and inexpensive way to start with farming.",
     "shovel": "Shovel",
+    "shovelDescription": "Simple but robust shovel that can turn grass to farmland.",
     "wateringCan": "Watering Can",
-    "bigWateringCan": "Big Watering Can"
+    "wateringCanDescription": "Small watering can that can't hold a whole lot of water",
+    "bigWateringCan": "Big Watering Can",
+    "bigWateringCanDescription": "Can hold way more water than the small variant."
 } 

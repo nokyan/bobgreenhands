@@ -17,9 +17,9 @@ namespace BobGreenhands.Map.Items
             Durability = 120;
         }
 
-        public override string? GetTooltipString()
+        public override string? GetInfoText()
         {
-            return Language.Translate("shovel");
+            return String.Format("{0}\n{1}\n{2}", Language.Translate("shovel"), Language.Translate("shovelDescription"), Language.Translate("durability", "" + Durability, "" + MaxDurability));
         }
 
         public override bool UsedOnTile(int tileX, int tileY, TileType tile, PlayScene playScene)

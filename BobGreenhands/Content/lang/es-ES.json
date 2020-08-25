@@ -50,8 +50,21 @@
     "discordRpc": "Discord RPC", 
     "nez": "Nez (Framework 2D para FNA):",
     "nezFork": "Fork compatible con .NET Core: ",
+    "water": "Agua: {0}%",
+    "fertilizer": "Fertilizante: {0}%",
+    "growthValue": "Crecimiento: {0}%",
+    "capacity": "Capacidad: {0}/{1}",
+    "durability": "Durabilidad: {0}/{1}",
+    "amount": "Cantidad: {0}/{1}",
+    "fullyGrownParantheses": "(a gran escala)",
+    "bobInfoText": "Bob Greenhands (¡ese eres tú!)",
+    "strawberryInfoText": "Fresas",
     "strawberrySeeds": "Semillas de Fresa",
+    "strawberrySeedsDescription": "Una forma fácil y barata de empezar con la agricultura.",
     "shovel": "Pala",
+    "shovelDescription": "Una simple pero robusta pala que puede convertir el pasto en tierra de cultivo.",
     "wateringCan": "Regadera",
-    "bigWateringCan": "Gran Regadera"
+    "wateringCanDescription": "Pequeña regadera que no puede contener mucha agua.",
+    "bigWateringCan": "Gran Regadera",
+    "bigWateringCanDescription": "Puede contener mucha más agua que la variante pequeña."
 } 

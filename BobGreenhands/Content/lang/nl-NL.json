@@ -51,8 +51,21 @@
     "discordRpc": "Discord RPC",
     "nez": "Nez (2D-framework voor FNA): ",
     "nezFork": ".NET Core compatibele fork: ",
+    "water": "Water: {0}%",
+    "fertilizer": "Meststof: {0}%",
+    "growthValue": "Groei: {0}%",
+    "capacity": "Capaciteit: {0}/{1}",
+    "durability": "Duurzaamheid: {0}/{1}",
+    "amount": "Hoeveelheid: {0}/{1}",
+    "fullyGrownParantheses": "(volwaardig)",
+    "bobInfoText": "Bob Greenhands (dat bent u!)",
+    "strawberryInfoText": "Aardbeien",
     "strawberrySeeds": "Aardbeienzaad",
+    "strawberrySeedsDescription": "Een makkelijke en goedkope manier om met de landbouw te beginnen.",
     "shovel": "Schop",
+    "shovelDescription": "Eenvoudige maar robuuste schop die gras kan veranderen in landbouwgrond.",
     "wateringCan": "Gieter",
-    "bigWateringCan": "Grote Gieter"
+    "wateringCanDescription": "Kleine gieter die niet veel water kan bevatten.",
+    "bigWateringCan": "Grote Gieter",
+    "bigWateringCanDescription": "Kan veel meer water vasthouden dan de kleine variant."
 } 

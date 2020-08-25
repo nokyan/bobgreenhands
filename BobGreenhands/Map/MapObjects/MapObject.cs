@@ -45,6 +45,8 @@ namespace BobGreenhands.Map.MapObjects
 
         public abstract void OnRandomTick(GameTime gameTime);
 
+        public abstract string GetInfoText();
+
         public void CalculateLayerDepth()
         {
             if(_canCoverMapObjects)
