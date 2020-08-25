@@ -83,12 +83,12 @@ namespace BobGreenhands.Utils.CultureUtils
         /// <summary>
         /// Translate the given translatable string into either English (US), the user-given language or the translatable string because the translatable is invalid.
         /// </summary>
-        public static string Translate(string translatable, string[] strings = null)
+        public static string Translate(string translatable, params object?[] args)
         {
             if (LanguageDict.ContainsKey(translatable))
             {
                 // if the additional string array is null, don't use String.Format()
-                return strings == null ? LanguageDict[translatable] : String.Format(LanguageDict[translatable], strings);
+                return args == null ? LanguageDict[translatable] : String.Format(LanguageDict[translatable], args);
             }
             else
             {
@@ -96,15 +96,15 @@ namespace BobGreenhands.Utils.CultureUtils
             };
         }
 
-        public static string Translate(string translatable, string language, string[] strings = null)
+        public static string Translate(CultureInfo language, string translatable, params object?[] args)
         {
-            string lang = File.ReadAllText(Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Content", "lang", language + ".json")));
+            string lang = File.ReadAllText(Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Content", "lang", language.ToString() + ".json")));
             Dictionary<string, object> langDict_tmp = Json.FromJson(lang) as Dictionary<string, object>;
             Dictionary<string, string> langDict = langDict_tmp.ToDictionary(k => k.Key, k => k.Value.ToString());
             if (langDict.ContainsKey(translatable))
             {
                 // if the additional string array is null, don't use String.Format()
-                return strings == null ? langDict[translatable] : String.Format(langDict[translatable], strings);
+                return args == null ? langDict[translatable] : String.Format(langDict[translatable], args);
             }
             else
             {

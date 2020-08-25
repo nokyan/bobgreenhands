@@ -27,11 +27,11 @@ namespace BobGreenhands.Scenes
 
         private Dictionary<string, CultureInfo> _languages = new Dictionary<string, CultureInfo>()
         {
-            {Language.Translate("langName", "de-DE", null), new CultureInfo("de-DE")},
-            {Language.Translate("langName", "en-US", null), new CultureInfo("en-US")},
-            {Language.Translate("langName", "es-ES", null), new CultureInfo("es-ES")},
-            {Language.Translate("langName", "fr-FR", null), new CultureInfo("fr-FR")},
-            {Language.Translate("langName", "nl-NL", null), new CultureInfo("nl-NL")},
+            {Language.Translate(new CultureInfo("de-DE"), "langName"), new CultureInfo("de-DE")},
+            {Language.Translate(new CultureInfo("en-US"), "langName"), new CultureInfo("en-US")},
+            {Language.Translate(new CultureInfo("es-ES"), "langName"), new CultureInfo("es-ES")},
+            {Language.Translate(new CultureInfo("fr-FR"), "langName"), new CultureInfo("fr-FR")},
+            {Language.Translate(new CultureInfo("nl-NL"), "langName"), new CultureInfo("nl-NL")},
         };
 
         private CultureInfo _oldCultureInfo = Language.CultureInfo;
@@ -137,7 +137,7 @@ namespace BobGreenhands.Scenes
                 output.Add(s);
             }
             _listBox.SetItems(output.ToArray());
-            _listBox.SetSelected(Language.Translate("langName", Language.CultureInfo.ToString(), null));
+            _listBox.SetSelected(Language.Translate("langName", Language.CultureInfo.ToString()));
             _tabPane.AddTab(_languageSettings);
         }
 
