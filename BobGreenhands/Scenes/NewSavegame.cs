@@ -43,7 +43,7 @@ namespace BobGreenhands.Scenes
             table.Row();
             table.Add(new Label(Language.Translate("giveName"), Game.NormalSkin).SetWrap(true).SetFontScale(4f)).SetFillX().Space(25f);
             table.Row();
-            table.Add(new Label(String.Format(Language.Translate("location"), Game.GameFolder.SavegamesFolder), Game.NormalSkin).SetWrap(true).SetAlignment(Align.TopLeft).SetFontScale(4f)).SetFillX().Top().Space(25f);
+            table.Add(new Label(Language.Translate("location", Game.GameFolder.SavegamesFolder), Game.NormalSkin).SetWrap(true).SetAlignment(Align.TopLeft).SetFontScale(4f)).SetFillX().Top().Space(25f);
             table.Row();
 
             _textField = new Nez.UI.TextField("", Game.NormalSkin);
