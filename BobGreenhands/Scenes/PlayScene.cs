@@ -287,6 +287,15 @@ namespace BobGreenhands.Scenes
             CurrentSavegame.SavegameData.MapObjectList.Add(mapObject);
         }
 
+        public void DestroyMapObject(MapObject mapObject)
+        {
+            List<MapObject> mapObjects = _mapObjects;
+            mapObjects.Remove(mapObject);
+            _mapObjects = mapObjects;
+            mapObject.Destroy();
+            CurrentSavegame.SavegameData.MapObjectList.Remove(mapObject);
+        }
+
         // TODO: make that a little bit more efficient
         public bool IsOccupiedByMapObject(float x, float y)
         {

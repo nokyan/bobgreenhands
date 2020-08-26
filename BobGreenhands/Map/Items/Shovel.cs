@@ -45,7 +45,7 @@ namespace BobGreenhands.Map.Items
             }
             if(mapObject is Plant)
             {
-                mapObject.Destroy();
+                playScene.DestroyMapObject(mapObject);
                 Durability--;
             }
         }
