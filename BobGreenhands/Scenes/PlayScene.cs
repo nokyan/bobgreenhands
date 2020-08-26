@@ -242,7 +242,7 @@ namespace BobGreenhands.Scenes
 
             UpdateSelectedThing();
 
-            // save the game every minute
+            // save the game every 10 secs
             _autoSave = new System.Threading.Tasks.Task(() =>
             {
                 {
@@ -250,7 +250,7 @@ namespace BobGreenhands.Scenes
                     {
                         CurrentSavegame.Save();
                         _log.Debug("Saved the game (Auto-Save)");
-                        Thread.Sleep(60000);
+                        Thread.Sleep(10000);
                     }
                 }
             });
