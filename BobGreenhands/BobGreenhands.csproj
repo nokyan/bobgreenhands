@@ -12,7 +12,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Nez\Nez.Portable\Nez.DotNetCore.csproj" />
-        <ProjectReference Include="..\Nez\Nez.FarseerPhysics\Nez.FarseerPhysics.DotNetCore.csproj" />
         <ProjectReference Include="..\Nez\Nez.ImGui\Nez.ImGui.DotNetCore.csproj" />
         <ProjectReference Include="..\Nez\Nez.Persistence\Nez.Persistence.DotNetCore.csproj" />
     </ItemGroup>
