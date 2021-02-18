@@ -18,8 +18,6 @@ You also need [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/
 
 .NET Core also supports BSD and macOS but I can't guarantee support for both operating systems as I don't have an Apple device (and don't plan on either buying one or breaking Apple's EULA) nor any kind of BSD installed.
 
-I test this game mainly on my desktop PC running Manjaro Linux with GNOME on an AMD Ryzen 5 1600 with an NVIDIA GTX 1060, on my notebook running Manjaro Linux with GNOME on an Intel i5-6200U with integrated Intel HD Graphics and also rarely on an older machine running Windows 10 on an AMD A6-5200 APU with integrated Radeon R3 Graphics.
-
 **TL;DR:**
 
 Requirements:
