@@ -28,6 +28,7 @@ Requirements:
 - [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) (includes the Runtime) or higher for building the game
 - ``cmake``, ``make`` and ``gcc`` for building FNA3D on GNU/Linux (and presumably macOS/OS X?)
 - ``faudio``
+- ``libsdl2``
 - Visual Studio 2010 for building FNA3D on Windows - **[read more](https://github.com/FNA-XNA/FNA3D/blob/master/visualc/README)**
 
 Fully supported operating systems and architectures:
