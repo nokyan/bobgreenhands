@@ -44,7 +44,6 @@ namespace BobGreenhands.Scenes
         public const int BackgroundRenderLayer = 4;
         public const int SelectedTileRenderLayer = 3;
         public const int MapRenderLayer = 2;
-        public const int HotbarRenderLayer = 1;
 
         public const float RandomTickPercent = 0.001f;
         public const float GUIScale = 64f / Game.TextureResolution;
@@ -115,15 +114,7 @@ namespace BobGreenhands.Scenes
         private Entity _selectedMapObjectEntity;
         private static SpriteRenderer _selectedMapObjectRenderer;
 
-        private Texture2D _mapTexture;
-
-        private TiledDrawable _background;
-
-        private SpriteRenderer _hotbarRenderer;
-
         private Point _selectedTilePoint = Point.Zero;
-
-        private int _zoom;
 
         private readonly float _maxCamSpeed = 4f * (Game.TextureResolution / 32f);
         private float _horizontalCamMovement;
@@ -268,86 +259,6 @@ namespace BobGreenhands.Scenes
             _maxCameraYPos = _mapEntity.Height * Camera.Zoom * 2;
         }
 
-        public void RefreshMap()
-        {
-            _mapEntity.Refresh();
-        }
-
-        public List<MapObject> GetMapObjects()
-        {
-            return _mapObjects;
-        }
-
-        public void AddMapObject(MapObject mapObject)
-        {
-            List<MapObject> mapObjects = _mapObjects;
-            mapObjects.Add(mapObject);
-            _mapObjects = mapObjects;
-            AddEntity(mapObject);
-            CurrentSavegame.SavegameData.MapObjectList.Add(mapObject);
-        }
-
-        public void DestroyMapObject(MapObject mapObject)
-        {
-            List<MapObject> mapObjects = _mapObjects;
-            mapObjects.Remove(mapObject);
-            _mapObjects = mapObjects;
-            mapObject.Destroy();
-            CurrentSavegame.SavegameData.MapObjectList.Remove(mapObject);
-        }
-
-        // TODO: make that a little bit more efficient
-        public bool IsOccupiedByMapObject(float x, float y)
-        {
-            foreach (MapObject m in _mapObjects.ToArray())
-            {
-                if(!m.OccupiesTiles)
-                    continue;
-                Location minLocation = Location.FromEntityCoordinates(m.Position.X - m.SpriteRenderer.Origin.X, m.Position.Y - m.SpriteRenderer.Origin.Y);
-                Location maxLocation = Location.FromEntityCoordinates(m.Position.X + (m.Hitbox.X - m.SpriteRenderer.Origin.X), m.Position.Y + (m.Hitbox.Y - m.SpriteRenderer.Origin.Y));
-                if(x >= minLocation.X && x < maxLocation.X && y >= minLocation.Y && y < maxLocation.Y)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public override void Update()
-        {
-            base.Update();
-            // move camera
-            float newXPos = Math.Clamp(Camera.Position.X - _horizontalCamMovement * (Time.DeltaTime * 60), -_maxCameraXPos, _maxCameraXPos);
-            float newYPos = Math.Clamp(Camera.Position.Y - _verticalCamMovement * (Time.DeltaTime * 60), -_maxCameraYPos, _maxCameraYPos);
-            if(!CamPosLocked) {
-                if(newXPos != Camera.Position.X || newYPos != Camera.Position.Y)
-                {
-                    Camera.SetPosition(new Vector2(newXPos, newYPos));
-                }
-            }
-            if(CurrentLockedState == LockedState.None || CurrentLockedState == LockedState.ItemLocked)
-                UpdateSelectedThing();
-
-
-            List<MapObject> toBeRandomTicked = new List<MapObject>();
-            foreach (MapObject m in _mapObjects.ToArray())
-            {
-                m.OnTick(Game.GameTime);
-                // random tick
-                // since tick rate is tied to the FPS, we have to figure out a way, to still have a reasonable random tick rate no matter the fps
-                // we say, that with 60 FPS we want ``RandomTickPercent`` of the on-screen entities random ticked
-                // since any computer built in this millennium is able to surpass that easily, we have to compensate for that
-                if(randomTick.NextDouble() < RandomTickPercent * (Time.DeltaTime * 60f))
-                {
-                    toBeRandomTicked.Add(m);
-                }
-            }
-            foreach (MapObject m in toBeRandomTicked)
-            {
-                m.OnRandomTick(Game.GameTime);
-            }
-        }
-
         /// <summary>
         /// Return the MapObject that's below the mouse cursor
         /// </summary>
@@ -379,8 +290,12 @@ namespace BobGreenhands.Scenes
             return false;
         }
 
+        /// <summary>
+        /// Marks a Tile or MapObject as marked or locked, depending on what the cursor is hovering on.
+        /// </summary>
         private void UpdateSelectedThing()
         {
+            // if there's an UI element blocking, disable any selection.
             if(UIIsBlocking())
             {
                 _selectedTileEntity.Enabled = false;
@@ -438,6 +353,9 @@ namespace BobGreenhands.Scenes
 
         }
 
+        /// <summary>
+        /// Sets a given InventoryItem as locked.
+        /// </summary>
         public static void SetLockedItem(InventoryItem? item)
         {
             if (item == null)
@@ -455,6 +373,128 @@ namespace BobGreenhands.Scenes
                 LockedIndex = item.Index;
                 item.Locked.SetVisible(true);
             }
+        }
+
+        /// <summary>
+        /// Checks whether the camera should be moving due to the position of the mouse and moves it accordingly.
+        /// </summary>
+        public void MoveCamera()
+        {
+            float newXPos = Math.Clamp(Camera.Position.X - _horizontalCamMovement * (Time.DeltaTime * 60), -_maxCameraXPos, _maxCameraXPos);
+            float newYPos = Math.Clamp(Camera.Position.Y - _verticalCamMovement * (Time.DeltaTime * 60), -_maxCameraYPos, _maxCameraYPos);
+            if(!CamPosLocked) {
+                if(newXPos != Camera.Position.X || newYPos != Camera.Position.Y)
+                {
+                    Camera.SetPosition(new Vector2(newXPos, newYPos));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Random ticks random MapEntities; amount depending on the frametime.
+        /// </summary>
+        public void GlobalRandomTick()
+        {
+            List<MapObject> toBeRandomTicked = new List<MapObject>();
+            foreach (MapObject m in _mapObjects.ToArray())
+            {
+                // random tick
+                // since tick rate is tied to the FPS, we have to figure out a way, to still have a reasonable random tick rate no matter the fps
+                // we say, that with 60 FPS we want ``RandomTickPercent`` of the on-screen entities random ticked
+                // since any computer built in this millennium is able to surpass that easily, we have to compensate for that
+                if(randomTick.NextDouble() < RandomTickPercent * (Time.DeltaTime * 60f))
+                {
+                    toBeRandomTicked.Add(m);
+                }
+            }
+            foreach (MapObject m in toBeRandomTicked)
+            {
+                m.OnRandomTick(Game.GameTime);
+            }
+        }
+
+        /// <summary>
+        /// Ticks all MapEntities.
+        /// </summary>
+        public void GlobalTick()
+        {
+            foreach (MapObject m in _mapObjects.ToArray())
+            {
+                m.OnTick(Game.GameTime);
+            }
+        }
+
+        /// <summary>
+        /// Forces the MapEntity to refresh.
+        /// </summary>
+        public void RefreshMap()
+        {
+            _mapEntity.Refresh();
+        }
+
+        /// <summary>
+        /// Returns a list of all MapObjects.
+        /// </summary>
+        public List<MapObject> GetMapObjects()
+        {
+            return _mapObjects;
+        }
+
+        /// <summary>
+        /// Adds a MapObject to the scene.
+        /// </summary>
+        public void AddMapObject(MapObject mapObject)
+        {
+            List<MapObject> mapObjects = _mapObjects;
+            mapObjects.Add(mapObject);
+            _mapObjects = mapObjects;
+            AddEntity(mapObject);
+            CurrentSavegame.SavegameData.MapObjectList.Add(mapObject);
+        }
+
+        /// <summary>
+        /// Removes a MapObject from the scene.
+        /// </summary>
+        public void DestroyMapObject(MapObject mapObject)
+        {
+            List<MapObject> mapObjects = _mapObjects;
+            mapObjects.Remove(mapObject);
+            _mapObjects = mapObjects;
+            mapObject.Destroy();
+            CurrentSavegame.SavegameData.MapObjectList.Remove(mapObject);
+        }
+
+        // TODO: make that a little bit more efficient
+        /// <summary>
+        /// Returns true when the cursor is hovering over a MapObject whose OccupiesTiles value is true.
+        /// </summary>
+        public bool IsOccupiedByMapObject(float x, float y)
+        {
+            foreach (MapObject m in _mapObjects.ToArray())
+            {
+                if(!m.OccupiesTiles)
+                    continue;
+                Location minLocation = Location.FromEntityCoordinates(m.Position.X - m.SpriteRenderer.Origin.X, m.Position.Y - m.SpriteRenderer.Origin.Y);
+                Location maxLocation = Location.FromEntityCoordinates(m.Position.X + (m.Hitbox.X - m.SpriteRenderer.Origin.X), m.Position.Y + (m.Hitbox.Y - m.SpriteRenderer.Origin.Y));
+                if(x >= minLocation.X && x < maxLocation.X && y >= minLocation.Y && y < maxLocation.Y)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            MoveCamera();
+        
+            if(CurrentLockedState == LockedState.None || CurrentLockedState == LockedState.ItemLocked)
+                UpdateSelectedThing();
+
+            GlobalRandomTick();
+            GlobalTick();
         }
 
         public void FirstExtendedMousePressed()
