@@ -6,7 +6,7 @@ using BobGreenhands.Utils;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using System;
-
+using BobGreenhands.Skins;
 
 namespace BobGreenhands.Scenes
 {
@@ -23,22 +23,22 @@ namespace BobGreenhands.Scenes
 
             Table table = UICanvas.Stage.AddElement(new Table());
             table.SetFillParent(true);
-            table.Pad(25);
-            table.Add(new Label(Language.Translate("deletionWindowTitle"), Game.NormalSkin).SetWrap(true).SetFontScale(6f)).SetFillX().SetExpandX().SetSpaceBottom(25f);
+            table.Pad(NormalSkin.OuterSpacing);
+            table.Add(new Label(Language.Translate("deletionWindowTitle"), Game.NormalSkin).SetWrap(true).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX().SetSpaceBottom(NormalSkin.OuterSpacing);
             table.Row();
-            table.Add(new Label(String.Format(Language.Translate("deletionConfirm"), cleanFilename.Remove(0, 2)), Game.NormalSkin).SetAlignment(Align.TopLeft).SetWrap(true).SetFontScale(4f)).Fill().Expand().Top().Space(25f);
+            table.Add(new Label(Language.Translate("deletionConfirm", cleanFilename), Game.NormalSkin).SetAlignment(Align.TopLeft).SetWrap(true).SetFontScale(NormalSkin.NormalFontScale)).Fill().Expand().Top().Space(NormalSkin.OuterSpacing);
             table.Row();
 
-            Table buttonTable = table.Add(new Table()).SetSpaceBottom(25f).SetExpandX().GetElement<Table>();
+            Table buttonTable = table.Add(new Table()).SetSpaceBottom(NormalSkin.OuterSpacing).SetExpandX().GetElement<Table>();
 
             TextButton yesButton = new TextButton(Language.Translate("yes"), Game.NormalSkin);
-            yesButton.GetLabel().SetFontScale(3f);
-            buttonTable.Add(yesButton).SetExpandX().Bottom().Right().Space(10f);
+            yesButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
+            buttonTable.Add(yesButton).SetExpandX().Bottom().Right().Space(NormalSkin.Spacing);
             yesButton.OnClicked += YesButton_onClicked;
 
             TextButton noButton = new TextButton(Language.Translate("no"), Game.NormalSkin);
-            noButton.GetLabel().SetFontScale(3f);
-            buttonTable.Add(noButton).Bottom().Right().Space(10f);
+            noButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
+            buttonTable.Add(noButton).Bottom().Right().Space(NormalSkin.Spacing);
             noButton.OnClicked += NoButton_onClicked;
         }
 

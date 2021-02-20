@@ -7,7 +7,7 @@ using BobGreenhands.Utils.CultureUtils;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.UI;
-
+using BobGreenhands.Skins;
 
 namespace BobGreenhands.Scenes
 {
@@ -53,8 +53,8 @@ namespace BobGreenhands.Scenes
         {
             _table = UICanvas.Stage.AddElement(new Table());
             _table.SetFillParent(true);
-            _table.Pad(25);
-            _table.Add(new Label(Language.Translate("settings"), Game.NormalSkin).SetFontScale(6f)).SetFillX().SetExpandX();
+            _table.Pad(NormalSkin.OuterSpacing);
+            _table.Add(new Label(Language.Translate("settings"), Game.NormalSkin).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX();
 
             _table.Row();
 
@@ -66,39 +66,40 @@ namespace BobGreenhands.Scenes
             tabButtonStyle.Inactive = new PrimitiveDrawable(new Color(0, 0, 0, 200));
             tabButtonStyle.LabelStyle = Game.NormalSkin.Get<LabelStyle>("label");
             tabWindowStyle.TabButtonStyle = tabButtonStyle;
-            _tabPane = _table.Add(new TabPane(tabWindowStyle)).Expand().Space(15f).Fill().GetElement<TabPane>();
+            TabPane tabPane = new TabPane(tabWindowStyle);
+            _tabPane = _table.Add(tabPane).Expand().Space(NormalSkin.Spacing).Fill().GetElement<TabPane>();
 
             _table.Row();
 
             Table buttonTable = _table.Add(new Table()).GetElement<Table>();
 
             _applyButton = new TextButton(Language.Translate("apply"), Game.NormalSkin);
-            buttonTable.Add(_applyButton).Space(15f);
+            buttonTable.Add(_applyButton).Space(NormalSkin.Spacing);
             _applyButton.OnClicked += ApplyButton_onClicked;
 
             _backButton = new TextButton(Language.Translate("back"), Game.NormalSkin);
-            buttonTable.Add(_backButton).Space(15f);
+            buttonTable.Add(_backButton).Space(NormalSkin.Spacing);
             _backButton.OnClicked += BackButton_onClicked;
 
             TabStyle tabStyle = new TabStyle();
             tabStyle.Background = new PrimitiveDrawable(new Color(0, 0, 0, 0));
             /// tabs
-            _audioSettings = new Tab(String.Format("  {0}  ", Language.Translate("audioSettings")), tabStyle);
-            _audioSettings.Pad(25f);
-            _audioSettings.Add(new Label("WIP! :)", Game.NormalSkin).SetFontScale(3f));
+            _audioSettings = new Tab(String.Format(" {0} ", Language.Translate("audioSettings")), tabStyle);
+            _audioSettings.Pad(NormalSkin.OuterSpacing);
+            _audioSettings.Add(new Label("WIP! :)", Game.NormalSkin).SetFontScale(NormalSkin.NormalFontScale));
             _tabPane.AddTab(_audioSettings);
 
-            _videoSettings = new Tab(String.Format("  {0}  ", Language.Translate("videoSettings")), tabStyle);
-            _videoSettings.Pad(25f);
-            HorizontalGroup resolutionGroup = _videoSettings.Add(new HorizontalGroup(15f)).SetExpandX().Center().Space(15f).GetElement<HorizontalGroup>();
-            resolutionGroup.AddElement(new Label(Language.Translate("resolution"), Game.NormalSkin).SetFontScale(2f).SetWrap(true));
+            _videoSettings = new Tab(String.Format(" {0} ", Language.Translate("videoSettings")), tabStyle);
+            _videoSettings.Pad(NormalSkin.OuterSpacing);
+            HorizontalGroup resolutionGroup = _videoSettings.Add(new HorizontalGroup(NormalSkin.Spacing)).SetExpandX().Center().Space(NormalSkin.Spacing).GetElement<HorizontalGroup>();
+            resolutionGroup.AddElement(new Label(Language.Translate("resolution"), Game.NormalSkin).SetFontScale(NormalSkin.NormalFontScale).SetWrap(true));
             _resX.SetText("" + Screen.Width);
             _resX.SetAlignment(Align.Center);
             _resX.OnTextChanged += resX_onChanged;
             _resX.OnEnterPressed += resX_onEnter;
             _resX.OnTabPressed += resX_onEnter;
             resolutionGroup.AddElement(_resX);
-            resolutionGroup.AddElement(new Label("x", Game.NormalSkin).SetFontScale(3f));
+            resolutionGroup.AddElement(new Label("x", Game.NormalSkin).SetFontScale(NormalSkin.NormalFontScale));
             _resY.SetText("" + Screen.Height);
             _resY.SetAlignment(Align.Center);
             _resY.OnTextChanged += resY_onChanged;
@@ -106,30 +107,30 @@ namespace BobGreenhands.Scenes
             _resY.OnTabPressed += resY_onEnter;
             resolutionGroup.AddElement(_resY);
             _videoSettings.Row();
-            HorizontalGroup videoSettings1 = _videoSettings.Add(new HorizontalGroup(15f)).SetExpandX().Center().Space(15f).GetElement<HorizontalGroup>();
+            HorizontalGroup videoSettings1 = _videoSettings.Add(new HorizontalGroup(NormalSkin.Spacing)).SetExpandX().Center().Space(NormalSkin.Spacing).GetElement<HorizontalGroup>();
             videoSettings1.SetAlignment(Align.Center);
             _vsyncButton = videoSettings1.AddElement(new TextButton(Language.Translate("vsync"), Game.NormalSkin));
-            _vsyncButton.GetLabel().SetFontScale(3f);
+            _vsyncButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             _vsyncButton.IsChecked = Screen.SynchronizeWithVerticalRetrace;
             _vsyncButton.OnClicked += VsyncButton_onClicked;
             _fullscreenButton = videoSettings1.AddElement(new TextButton(Language.Translate("fullscreen"), Game.NormalSkin));
-            _fullscreenButton.GetLabel().SetFontScale(3f);
+            _fullscreenButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             _fullscreenButton.IsChecked = Screen.IsFullscreen;
             _fullscreenButton.OnClicked += FullscreenButton_onClicked;
             _vignetteButton = videoSettings1.AddElement(new TextButton(Language.Translate("vignette"), Game.NormalSkin));
-            _vignetteButton.GetLabel().SetFontScale(3f);
+            _vignetteButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             _vignetteButton.IsChecked = Game.GameFolder.Settings.GetBool("vignette");
             _vignetteButton.OnClicked += VignetteButton_onClicked;
             _videoSettings.Row();
-            _videoSettings.Add(new Label(Language.Translate("restartInfo"), Game.NormalSkin).SetFontScale(2f).SetWrap(true).SetAlignment(Align.BottomLeft)).Expand().Fill().Bottom();
+            _videoSettings.Add(new Label(Language.Translate("restartInfo"), Game.NormalSkin).SetFontScale(NormalSkin.NormalFontScale).SetWrap(true).SetAlignment(Align.BottomLeft)).Expand().Fill().Bottom();
             _tabPane.AddTab(_videoSettings);
             
-            _languageSettings = new Tab(String.Format("  {0}  ", Language.Translate("language")), tabStyle);
-            _languageSettings.Pad(25f);
+            _languageSettings = new Tab(String.Format(" {0} ", Language.Translate("language")), tabStyle);
+            _languageSettings.Pad(NormalSkin.OuterSpacing);
             ScrollPane scrollPane = new ScrollPane(_listBox);
             scrollPane.SetScrollSpeed(1f);
             scrollPane.SetSmoothScrolling(true);
-            _languageSettings.Add(scrollPane).Expand().Fill().Space(25f);
+            _languageSettings.Add(scrollPane).Expand().Fill().Space(NormalSkin.OuterSpacing);
             // init the string list of all the languages available
             List<string> output = new List<string>();
             foreach(string s in _languages.Keys)
@@ -162,8 +163,8 @@ namespace BobGreenhands.Scenes
             {
                 res = Screen.Width;
             }
-            if(res < 1280)
-                res = 1280;
+            if(res < 640)
+                res = 640;
             _resX.SetTextForced(Convert.ToString(res));
         }
 
@@ -178,8 +179,8 @@ namespace BobGreenhands.Scenes
             {
                 res = Screen.Height;
             }
-            if(res < 720)
-                res = 720;
+            if(res < 360)
+                res = 360;
             _resY.SetTextForced(Convert.ToString(res));
         }
 

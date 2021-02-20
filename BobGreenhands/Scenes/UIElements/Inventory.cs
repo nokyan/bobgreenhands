@@ -63,13 +63,13 @@ namespace BobGreenhands.Scenes.UIElements
             Table.Remove();
             Table = new Table();
             Table.Left();
-            Table.Pad(8f);
+            Table.Pad(4f * PlayScene.GUIScale);
             for (int x = 0; x < _items.Count; x++)
             {
                 // if we reached the end of a row, start a new row
                 if (x != 0 && x % Columns == 0)
                 Table.Row();
-                Table.Add(_items[x]).Pad(8f);
+                Table.Add(_items[x]).Space(4f * PlayScene.GUIScale);
             }
             Add(Table);
         }

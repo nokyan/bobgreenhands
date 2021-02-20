@@ -34,7 +34,7 @@ namespace BobGreenhands.Scenes
             if(_backgroundDrawable == null)
             {
                 Texture2D background = Game.Content.LoadTexture("img/background", true);
-                _textureScale = Math.Max(Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height) * 3 / background.Bounds.GetSize().X;
+                _textureScale = Math.Max(Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height) * 2 / background.Bounds.GetSize().X;
                 RenderTarget2D renderTarget = RenderTarget.Create((int)(background.Bounds.GetSize().X * _textureScale), (int)(background.Bounds.GetSize().Y * _textureScale));
                 Game.GraphicsDevice.SetRenderTarget(renderTarget);
                 SpriteBatch spriteBatch = new SpriteBatch(Game.GraphicsDevice);
@@ -54,7 +54,6 @@ namespace BobGreenhands.Scenes
                 _backgroundDrawable.SetPosition(_backgroundX, _backgroundY);
             }
             backgroundUICanvas.Stage.AddElement(_backgroundDrawable);
-            // if either of the coordiantes of the background image at this point, the velocity of the background image should reverse
         }
 
         public override void Update()

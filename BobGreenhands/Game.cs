@@ -64,28 +64,12 @@ namespace BobGreenhands
             base.Initialize();
 
             // resolution supported warnings
-            // first, test if the resolution is less than 1280x720
-            if (Screen.Width < 1920 || Screen.Height < 1080)
-            {
-                if (Screen.Width < 1280 || Screen.Height < 720)
-                {
-                    _log.Warn("Your resolution is less than 1280x720, UI elements (especially small ones) might become hard to read at this resolution!");
-                }
-                else
-                {
-                    _log.Warn("The design resolution of this game is 1920x1080, you might see some degradations regarding scaling!");
-                }
-            }
-            // is the aspect ratio slimmer than 4:3?
-            if (((float)Screen.Width / Screen.Height) < 4f / 3f)
-            {
-                _log.Warn("Your aspect ratio is slimmer than 4:3, UI elements might be cut off the screen!");
-            }
-            // is the aspect ratio wider than 21:9?
-            if (((float)Screen.Width / Screen.Height) > 21f / 9f)
-            {
-                _log.Warn("Your aspect ratio is wider than 21:9, the game is not designed to run on monitors that wide, your experience might suffer from this!");
-            }
+            // the game's design resolution is 640x360 since it's the greatest common divisor of 1920x1080 and 1280x720
+            // so if the X axis or Y axis isn't divisible by 640 or 360 respectively, scaling won't look good
+            if(Screen.Width % 640 != 0)
+                _log.Warn("The game's window width (" + Screen.Width + ") is not cleanly divisible by 640! You might experience unpleasant scaling!");
+            if(Screen.Height % 360 != 0)
+                _log.Warn("The game's window height (" + Screen.Height + ") is not cleanly divisible by 360! You might experience unpleasant scaling!");
 
             Language.Initialize(CultureInfo);
 

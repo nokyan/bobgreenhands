@@ -46,11 +46,12 @@ namespace BobGreenhands.Scenes
         public const int MapRenderLayer = 2;
 
         public const float RandomTickPercent = 0.001f;
-        public const float GUIScale = 64f / Game.TextureResolution;
+        public const float GUIScale = 1f;
 
         public const float MaxCamZoom = 1.25f;
-        public const float MinCamZoom = 0.25f;
-        public const float CamZoomStep = 0.1250f;
+        public const float MinCamZoom = 0.03125f;
+        public const float CamZoomStep = 0.0125f;
+        public const float CamDefaultZoom = 0.25f;
 
         public static Sprite SelectedTileSprite;
         public static Sprite LockedTileSprite;
@@ -116,7 +117,7 @@ namespace BobGreenhands.Scenes
 
         private Point _selectedTilePoint = Point.Zero;
 
-        private readonly float _maxCamSpeed = 4f * (Game.TextureResolution / 32f);
+        private readonly float _maxCamSpeed = 6f * (Game.TextureResolution / 32f);
         private float _horizontalCamMovement;
         private float _verticalCamMovement;
         private float _maxCameraXPos;
@@ -182,7 +183,7 @@ namespace BobGreenhands.Scenes
             Camera.SetMaximumZoom(5);
             Camera.SetMinimumZoom(2);
             // TODO: Make zoom adjust to TextureResolution properly
-            Camera.SetZoom(0.75f);
+            Camera.SetZoom(CamDefaultZoom);
             RecalculateMaxCamPos();
 
             // init the selected tile sprite
@@ -527,6 +528,7 @@ namespace BobGreenhands.Scenes
                 {
                     Camera.Position = Vector2.Zero;
                 }
+                Console.WriteLine(Camera.Zoom);
 
             }
             else if (key == Keys.F10)
@@ -537,6 +539,7 @@ namespace BobGreenhands.Scenes
                 {
                     Camera.Position = Vector2.Zero;
                 }
+                Console.WriteLine(Camera.Zoom);
             }
         }
 

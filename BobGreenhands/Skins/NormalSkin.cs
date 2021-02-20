@@ -20,8 +20,19 @@ namespace BobGreenhands.Skins
 
         public readonly Color BackgroundColor = Color.Green;
 
-        public readonly float CheckboxScale = 4f;
-        public readonly float TextButtonScale = 4f;
+        public readonly float CheckboxScale = 1f;
+        public readonly float TextButtonScale = 1f;
+
+        public const float OuterSpacing = 8f;
+
+        public const float Spacing = OuterSpacing / 2;
+
+        public const float SubSpacing = Spacing / 2;
+
+        public const float HeadlineFontScale = 2f;
+
+        public const float NormalFontScale = 1f;
+
 
         public NormalSkin()
         {

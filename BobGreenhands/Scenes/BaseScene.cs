@@ -22,7 +22,8 @@ namespace BobGreenhands.Scenes
 
         public static readonly int UIRenderLayer = 100;
 
-        public static readonly int DebugRenderLayer = -50000;
+        // make sure that the debug renderer is rendering above everything else
+        public static readonly int DebugRenderLayer = Int32.MinValue;
 
         protected ScreenSpaceRenderer ScreenSpaceRenderer;
 
@@ -53,11 +54,11 @@ namespace BobGreenhands.Scenes
             base.Initialize();
             UICanvas DebugCanvas = CreateEntity("debug-canvas").AddComponent(new UICanvas());
             DebugCanvas.RenderLayer = DebugRenderLayer;
-            SetDesignResolution(1920, 1080, SceneResolutionPolicy.FixedHeight, 0, 0);
+            SetDesignResolution(640, 360, SceneResolutionPolicy.FixedHeight, 0, 0);
             Table debugTable = DebugCanvas.Stage.AddElement(new Table());
             debugTable.SetFillParent(true).Top();
             //debugTable.SetDebug(true);
-            DebugLabel.SetFontScale(2f);
+            DebugLabel.SetFontScale(1f);
             debugTable.Add(DebugLabel).SetExpandX().SetFillX().Left().Top();
         }
 

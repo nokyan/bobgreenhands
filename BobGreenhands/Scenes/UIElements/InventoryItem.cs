@@ -16,7 +16,7 @@ namespace BobGreenhands.Scenes.UIElements
         /// <summary>
         /// this font scale is relative to PlayScene.HotbarScale!
         /// </summary>
-        public const float FontScale = 0.5f * (Game.TextureResolution / 16f);
+        public const float FontScale = 1f;
 
         private Item? _item;
         public Item? Item
@@ -97,6 +97,7 @@ namespace BobGreenhands.Scenes.UIElements
             labelContainer.SetElement(Label);
             labelContainer.SetAlign(Align.BottomRight);
             Image = new Image();
+            Image.SetScale(PlayScene.GUIScale);
             Label.SetFontScale(PlayScene.GUIScale * FontScale);
             Item = item;
             Add(Image);

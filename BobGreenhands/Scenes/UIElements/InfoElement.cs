@@ -24,13 +24,13 @@ namespace BobGreenhands.Scenes.UIElements
             PlayScene.SelectionBlockingUIElements.Add(this);
             _backgroundImage = new Image(texture);
             _backgroundImage.SetScale(PlayScene.GUIScale);
-            _backgroundImage.SetSize(Game.TextureResolution * 2, Game.TextureResolution * 2);
+            _backgroundImage.SetSize(PlayScene.GUIScale * Game.TextureResolution, PlayScene.GUIScale * Game.TextureResolution);
             Add(_backgroundImage);
             _table = new Table();
-            _table.SetDebug(false);
-            _table.Pad(16f);
+            _table.SetDebug(true);
+            _table.Pad(PlayScene.GUIScale * 4f);
             _image = new Image();
-            _image.SetScale(2 * PlayScene.GUIScale);
+            _image.SetScale(PlayScene.GUIScale);
             _image.SetScaling(Scaling.Fit);
             // use a stack to first put a transparent PrimitiveDrawable on it and then the actual image,
             // this way we avoid weird scaling and position issues from non-square sprites, without
@@ -40,16 +40,16 @@ namespace BobGreenhands.Scenes.UIElements
             stack.Add(_image);
             _label = new Label("", Game.NormalSkin);
             // TODO: find a workaround for proper word wrapping
-            _label.SetWrap(true).SetFontScale(2f);
-            _table.Add(stack).Pad(16f).SetPadRight(44f);
-            _table.Add(new Container(_label).SetAlign(Align.Left).SetFill(true)).Pad(8f).Expand().Fill().Left().Top();
+            _label.SetWrap(true).SetFontScale(1f);
+            _table.Add(stack).Pad(PlayScene.GUIScale * 4f).SetPadRight(PlayScene.GUIScale * 11f);
+            _table.Add(new Container(_label).SetAlign(Align.Left).SetFill(true)).Pad(PlayScene.GUIScale * 4f).Expand().Fill().Left().Top();
             Add(_table);
         }
 
         public void SetImage(Texture2D texture)
         {
             _image.SetDrawable(new SpriteDrawable(texture));
-            _image.SetScale((2f * PlayScene.GUIScale) / (texture.Height / Game.TextureResolution));
+            _image.SetScale(2f * PlayScene.GUIScale / (texture.Height / Game.TextureResolution));
         }
 
         public void SetText(string text)

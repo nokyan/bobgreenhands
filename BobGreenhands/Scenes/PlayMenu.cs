@@ -8,7 +8,7 @@ using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using System;
-
+using BobGreenhands.Skins;
 
 namespace BobGreenhands.Scenes
 {
@@ -36,13 +36,13 @@ namespace BobGreenhands.Scenes
 
         public PlayMenu() : base()
         {
-            _playButton.GetLabel().SetFontScale(3f);
-            _renameButton.GetLabel().SetFontScale(3f);
-            _deleteButton.GetLabel().SetFontScale(3f);
+            _playButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
+            _renameButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
+            _deleteButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             
             _table = UICanvas.Stage.AddElement(new Table());
             _table.SetFillParent(true);
-            _table.Add(new Label(Language.Translate("selectSavegame"), Game.NormalSkin).SetFontScale(6f)).SetFillX().SetExpandX().SetPadTop(25f).SetPadRight(25f).SetPadLeft(25f);
+            _table.Add(new Label(Language.Translate("selectSavegame"), Game.NormalSkin).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX().SetPadTop(NormalSkin.OuterSpacing).SetPadRight(NormalSkin.OuterSpacing).SetPadLeft(NormalSkin.OuterSpacing);
             _table.Row();
 
             RefreshList();
@@ -51,27 +51,26 @@ namespace BobGreenhands.Scenes
             scrollPane.SetSmoothScrolling(true);
             Container scrollPaneContainer = new Container();
             scrollPaneContainer.AddElement(scrollPane);
-            scrollPaneContainer.SetScale(4f);
             scrollPaneContainer.FillParent = true;
-            _table.Add(scrollPane).Expand().Fill().Space(25f);
+            _table.Add(scrollPane).Expand().Fill().Space(NormalSkin.OuterSpacing);
             Game.SubscribeToInputHandler(this);
 
             _table.Row();
 
-            Table topButtonTable = _table.Add(new Table()).SetExpandX().SetFillX().SetSpaceTop(25f).SetSpaceBottom(10f).GetElement<Table>();
-            topButtonTable.Add(_playButton).Space(10f).SetFillX().GetElement<TextButton>();
-            topButtonTable.Add(_renameButton).Space(10f).SetFillX().GetElement<TextButton>();
-            topButtonTable.Add(_deleteButton).Space(10f).SetFillX().GetElement<TextButton>();
+            Table topButtonTable = _table.Add(new Table()).SetExpandX().SetFillX().SetSpaceTop(NormalSkin.OuterSpacing).SetSpaceBottom(NormalSkin.Spacing).GetElement<Table>();
+            topButtonTable.Add(_playButton).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
+            topButtonTable.Add(_renameButton).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
+            topButtonTable.Add(_deleteButton).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
 
             _table.Row();
 
-            Table bottomButtonTable = _table.Add(new Table()).SetExpandX().SetFillX().SetPadBottom(25f).GetElement<Table>();
-            TextButton newButton = bottomButtonTable.Add(new TextButton(Language.Translate("new"), Game.NormalSkin)).Space(10f).SetFillX().GetElement<TextButton>();
-            newButton.GetLabel().SetFontScale(3f);
-            TextButton refreshButton = bottomButtonTable.Add(new TextButton(Language.Translate("refresh"), Game.NormalSkin)).Space(10f).SetFillX().GetElement<TextButton>();
-            refreshButton.GetLabel().SetFontScale(3f);
-            TextButton backButton = bottomButtonTable.Add(new TextButton(Language.Translate("back"), Game.NormalSkin)).Space(10f).SetFillX().GetElement<TextButton>();
-            backButton.GetLabel().SetFontScale(3f);
+            Table bottomButtonTable = _table.Add(new Table()).SetExpandX().SetFillX().SetPadBottom(NormalSkin.OuterSpacing).GetElement<Table>();
+            TextButton newButton = bottomButtonTable.Add(new TextButton(Language.Translate("new"), Game.NormalSkin)).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
+            newButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
+            TextButton refreshButton = bottomButtonTable.Add(new TextButton(Language.Translate("refresh"), Game.NormalSkin)).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
+            refreshButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
+            TextButton backButton = bottomButtonTable.Add(new TextButton(Language.Translate("back"), Game.NormalSkin)).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
+            backButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
 
             newButton.OnClicked += NewButton_onClicked;
             _playButton.OnClicked += PlayButton_onClicked;

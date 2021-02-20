@@ -6,8 +6,7 @@ using BobGreenhands.Utils;
 using BobGreenhands.Persistence;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using System;
-
+using BobGreenhands.Skins;
 
 namespace BobGreenhands.Scenes
 {
@@ -38,36 +37,36 @@ namespace BobGreenhands.Scenes
 
             Table table = UICanvas.Stage.AddElement(new Table());
             table.SetFillParent(true);
-            table.Pad(25);
-            table.Add(new Label(Language.Translate("newSavegame"), Game.NormalSkin).SetWrap(true).SetFontScale(6f)).SetFillX().SetExpandX().SetSpaceBottom(25f);
+            table.Pad(NormalSkin.OuterSpacing);
+            table.Add(new Label(Language.Translate("newSavegame"), Game.NormalSkin).SetWrap(true).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX().SetSpaceBottom(NormalSkin.OuterSpacing);
             table.Row();
-            table.Add(new Label(Language.Translate("giveName"), Game.NormalSkin).SetWrap(true).SetFontScale(4f)).SetFillX().Space(25f);
+            table.Add(new Label(Language.Translate("giveName"), Game.NormalSkin).SetWrap(true).SetFontScale(NormalSkin.NormalFontScale)).SetFillX().Space(NormalSkin.OuterSpacing);
             table.Row();
-            table.Add(new Label(Language.Translate("location", Game.GameFolder.SavegamesFolder), Game.NormalSkin).SetWrap(true).SetAlignment(Align.TopLeft).SetFontScale(4f)).SetFillX().Top().Space(25f);
+            table.Add(new Label(Language.Translate("location", Game.GameFolder.SavegamesFolder), Game.NormalSkin).SetWrap(true).SetAlignment(Align.TopLeft).SetFontScale(NormalSkin.NormalFontScale)).SetFillX().Top().Space(NormalSkin.OuterSpacing);
             table.Row();
 
             _textField = new Nez.UI.TextField("", Game.NormalSkin);
             _textField.OnTextChanged += TextField_onTextChanged;
             _textField.SetOnlyFontChars(true);
             _textField.SetMaxLength(128);
-            table.Add(_textField).SetFillX().Expand().Top().Space(25f);
+            table.Add(_textField).SetFillX().Expand().Top().Space(NormalSkin.OuterSpacing);
             table.Row();
 
-            Table buttonTable = table.Add(new Table()).SetSpaceBottom(25f).SetExpandX().Bottom().GetElement<Table>();
+            Table buttonTable = table.Add(new Table()).SetSpaceBottom(NormalSkin.OuterSpacing).SetExpandX().Bottom().GetElement<Table>();
 
             _createButton = new TextButton(Language.Translate("create"), Game.NormalSkin);
-            _createButton.GetLabel().SetFontScale(3f);
-            buttonTable.Add(_createButton).SetExpandX().Bottom().Right().Space(10f);
+            _createButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
+            buttonTable.Add(_createButton).SetExpandX().Bottom().Right().Space(NormalSkin.Spacing);
             _createButton.OnClicked += CreateButton_onClicked;
 
             _createAndPlayButton = new TextButton(Language.Translate("createAndPlay"), Game.NormalSkin);
-            _createAndPlayButton.GetLabel().SetFontScale(3f);
-            buttonTable.Add(_createAndPlayButton).Bottom().Right().Space(10f);
+            _createAndPlayButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
+            buttonTable.Add(_createAndPlayButton).Bottom().Right().Space(NormalSkin.Spacing);
             _createAndPlayButton.OnClicked += CreateAndPlayButton_onClicked;
 
             _backButton = new TextButton(Language.Translate("back"), Game.NormalSkin);
-            _backButton.GetLabel().SetFontScale(3f);
-            buttonTable.Add(_backButton).Bottom().Right().Space(10f);
+            _backButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
+            buttonTable.Add(_backButton).Bottom().Right().Space(NormalSkin.Spacing);
             _backButton.OnClicked += BackButton_onClicked;
         }
 
