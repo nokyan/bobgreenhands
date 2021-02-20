@@ -32,13 +32,6 @@
         </Content>
     </ItemGroup>
 
-    <!-- TODO: Make this look better at some point -->
-    <Target Name="CompileFNA3D" BeforeTargets="BeforeBuild">
-		<Message Importance="High" Text="FNA3D not found! Please read this project's README.md to find out how to build FNA3D on Windows!" Condition="!Exists('..\Nez\Modules\FNA3D\libFNA3D.dll') And '$(OS)' == 'Windows_NT'" />
-		<Message Importance="High" Text="FNA3D not found; compiling..." Condition="!Exists('..\Nez\Modules\FNA3D\libFNA3D.dylib') And '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'" />
-		<Exec Command="cmake . ; make" WorkingDirectory="..\Nez\Modules\FNA3D" Condition="!Exists('..\Nez\Modules\FNA3D\libFNA3D.dylib') And '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'" />
-    </Target>
-
     <ItemGroup>
         <Content Include="..\Nez\Modules\FNA3D\lib*.*">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>

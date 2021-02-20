@@ -24,10 +24,10 @@ Requirements:
 
 - [.NET Core Runtime 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) or higher if you have a prebuilt version of the game
 - [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) (includes the Runtime) or higher for building the game
-- ``cmake``, ``make`` and ``gcc`` for building FNA3D on GNU/Linux (and presumably macOS/OS X?)
+- ``cmake``, ``make`` and ``gcc`` for building FNA3D on GNU/Linux and macOS.
 - ``faudio``
 - ``libsdl2``
-- Visual Studio 2010 for building FNA3D on Windows - **[read more](https://github.com/FNA-XNA/FNA3D/blob/master/visualc/README)**
+- Visual Studio 2010 for building FNA3D (a core component) on Windows - **[read more](https://github.com/FNA-XNA/FNA3D/blob/master/visualc/README)**
 
 Fully supported operating systems and architectures:
 
@@ -39,17 +39,22 @@ Fully supported operating systems and architectures:
 
 Partially supported operating systems and architectures (it might work, it might not, but making it work is definitely not a priority):
 
-- any macOS/OS X version
-- any Windows version older than Windows 7
+- macOS 10.13 or higher
 - any form of BSD
 - any processor not supporting the x64 instruction set (i. e. old 32-bit processors, ARM processors)
-- anything else not mentioned in the previous list
 
 ## Building and running the game
 
-**Right now you have to build FNA3D yourself on Windows until I've figured out how to put that into the BobGreenhands.csproj! Read more [here](https://github.com/FNA-XNA/FNA3D/blob/master/visualc/README).**
-Clone the repository **recursively** with ``git clone --recurse-submodules git@github.com:ManicRobot/bobgreenhands.git``, navigate into the newly created subfolder ``bobgreenhands/BobGreenhands`` and type ``dotnet run`` in your favorite terminal/command prompt. Proper installation is a thing that I'm not worried about just yet, I want to get the game in a functioning (and enjoyable) state before messing with details like that.
-If it doesn't start the first time because it's unable to load shared library 'FNA3D', just try running ``dotnet run`` again. If the issue persists, see, if FNA3D has been compiled.
+**Right now you have to build FNA3D yourself on Windows until I've figured out how to build it via Windows' command prompt! Read more [here](https://github.com/FNA-XNA/FNA3D/blob/master/visualc/README).**
+
+**Do NOT download this repository via GitHub's green "⤓ Code" button, since this will not download the game's dependencies!**
+
+1. Install the necessary requirements listed above.
+2. Clone the repository **recursively** with ``git clone --recurse-submodules git@github.com:ManicRobot/bobgreenhands.git``.
+3. Navigate into the newly created folder ``bobgreenhands``.
+4. If you're on Windows: Find out how to build FNA3D [here](https://github.com/FNA-XNA/FNA3D/blob/master/visualc/README) and build it accordingly in Nez\\Modules\\FNA3D. If you're on GNU/Linux or macOS: Run ``bash build.sh`` in your favorite terminal and wait till it's done.
+5. Navigate into ``BobGreenhands`` (``BobGreenhands`` is a subfolder within ``bobgreenhands``, notice the different capitalization).
+6. Run ``dotnet run`` in your command prompt/terminal and enjoy. :)
 
 ## Reporting bugs
 
