@@ -51,7 +51,7 @@
     "menu": "Menu",
     "nez": "Nez (2D FNA framework): ",
     "nezFork": ".NET Core compatible fork: ",
-    "plantInfo": "W {0}%  F {1}%  G {2}%",
+    "plantInfo": "힤 {0}%  힥 {1}%  힦 {2}%",
     "water": "Water: {0}%",
     "fertilizer": "Fertilizer: {0}%",
     "growthValue": "Growth: {0}%",

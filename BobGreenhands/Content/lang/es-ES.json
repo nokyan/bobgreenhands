@@ -50,7 +50,7 @@
     "discordRpc": "Discord RPC", 
     "nez": "Nez (Framework 2D para FNA):",
     "nezFork": "Fork compatible con .NET Core: ",
-    "plantInfo": "A {0}%  F {1}%  C {2}%",
+    "plantInfo": "힤 {0}%  힥 {1}%  힦 {2}%",
     "water": "Agua: {0}%",
     "fertilizer": "Fertilizante: {0}%",
     "growthValue": "Crecimiento: {0}%",

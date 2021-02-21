@@ -1,0 +1,6 @@
+Some unused Unicode characters have been repurposed for the game, this is a text file to keep track of them.
+
+The following Unicode characters have been repurposed:
+힤: Water Icon
+힥: Fertilizer Icon
+힦: Growth Icon
