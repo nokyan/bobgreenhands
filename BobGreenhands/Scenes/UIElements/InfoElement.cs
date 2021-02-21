@@ -40,7 +40,7 @@ namespace BobGreenhands.Scenes.UIElements
             stack.Add(_image);
             _label = new Label("", Game.NormalSkin);
             // TODO: find a workaround for proper word wrapping
-            _label.SetWrap(true).SetFontScale(1f);
+            _label.SetWrap(false).SetFontScale(1f);
             _table.Add(stack).Pad(PlayScene.GUIScale * 4f).SetPadRight(PlayScene.GUIScale * 11f);
             _table.Add(new Container(_label).SetAlign(Align.Left).SetFill(true)).Pad(PlayScene.GUIScale * 4f).Expand().Fill().Left().Top();
             Add(_table);

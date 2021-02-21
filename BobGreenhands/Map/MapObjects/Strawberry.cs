@@ -63,12 +63,15 @@ namespace BobGreenhands.Map.MapObjects
 
         public override string GetInfoText()
         {
-            string returnString = String.Format("{0}\n{1}\n{2}\n{3}", 
+            /*string returnString = String.Format("{0}\n{1}\n{2}\n{3}", 
                     Language.Translate("strawberryInfoText"),
                     Language.Translate("water", (int) (Water * 100)),
                     Language.Translate("fertilizer", (int) (Fertilizer * 100)),
                     Language.Translate("growthValue", (int) (GrowthValue * 100))
-            );
+            );*/
+            string returnString = String.Format("{0}\n{1}",
+                    Language.Translate("strawberryInfoText"),
+                    Language.Translate("plantInfo", (int) (Water*100), (int) (Fertilizer*100), (int) (GrowthValue*100)));
             return returnString;
         }
 
