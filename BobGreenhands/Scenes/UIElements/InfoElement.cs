@@ -27,7 +27,7 @@ namespace BobGreenhands.Scenes.UIElements
             _backgroundImage.SetSize(PlayScene.GUIScale * Game.TextureResolution, PlayScene.GUIScale * Game.TextureResolution);
             Add(_backgroundImage);
             _table = new Table();
-            _table.SetDebug(true);
+            _table.SetDebug(false);
             _table.Pad(PlayScene.GUIScale * 4f);
             _image = new Image();
             _image.SetScale(PlayScene.GUIScale);
