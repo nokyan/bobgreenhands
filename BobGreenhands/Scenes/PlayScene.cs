@@ -48,13 +48,17 @@ namespace BobGreenhands.Scenes
         public const float RandomTickPercent = 0.001f;
         public const float GUIScale = 1f;
 
-        public const float MaxCamZoom = 1.25f;
-        public const float MinCamZoom = 0.03125f;
-        public const float CamZoomStep = 0.0125f;
-        public const float CamDefaultZoom = 0.25f;
+        public readonly SelectableArray<float> ZoomSteps = new SelectableArray<float>(new float[]{0f, 0.5f, 1f}, 0, false);
+
+        private int ZoomStepsPointer = 0;
 
         public static Sprite SelectedTileSprite;
         public static Sprite LockedTileSprite;
+
+        // We want Camera to move only in integer steps, for that to work,
+        // we keep track of Camera's theoretical Position in float but when
+        // actually setting Camera's position, we convert it to an integer.
+        private float _camX, _camY = 0;
     
         private static LockedState _currentLockedState;
         public static LockedState CurrentLockedState
@@ -180,10 +184,8 @@ namespace BobGreenhands.Scenes
             _mapEntity = new MapEntity();
             _mapEntity.SetPosition(-_mapEntity.Width/2f, -_mapEntity.Height/2f);
             AddEntity(_mapEntity);
-            Camera.SetMaximumZoom(5);
-            Camera.SetMinimumZoom(2);
             // TODO: Make zoom adjust to TextureResolution properly
-            Camera.SetZoom(CamDefaultZoom);
+            Camera.SetZoom(ZoomSteps.Get());
             RecalculateMaxCamPos();
 
             // init the selected tile sprite
@@ -254,10 +256,11 @@ namespace BobGreenhands.Scenes
             _autoSave.Dispose();
         }
 
+        // TODO: Improve this.
         private void RecalculateMaxCamPos()
         {
-            _maxCameraXPos = _mapEntity.Width * Camera.Zoom * 2;
-            _maxCameraYPos = _mapEntity.Height * Camera.Zoom * 2;
+            _maxCameraXPos = Screen.Width / 4;
+            _maxCameraYPos = Screen.Height / 4;
         }
 
         /// <summary>
@@ -381,12 +384,14 @@ namespace BobGreenhands.Scenes
         /// </summary>
         public void MoveCamera()
         {
-            float newXPos = Math.Clamp(Camera.Position.X - _horizontalCamMovement * (Time.DeltaTime * 60), -_maxCameraXPos, _maxCameraXPos);
-            float newYPos = Math.Clamp(Camera.Position.Y - _verticalCamMovement * (Time.DeltaTime * 60), -_maxCameraYPos, _maxCameraYPos);
+            float newXPos = Math.Clamp(_camX - _horizontalCamMovement * (Time.DeltaTime * 60), -_maxCameraXPos, _maxCameraXPos);
+            float newYPos = Math.Clamp(_camY - _verticalCamMovement * (Time.DeltaTime * 60), -_maxCameraYPos, _maxCameraYPos);
             if(!CamPosLocked) {
+                _camX = newXPos;
+                _camY = newYPos;
                 if(newXPos != Camera.Position.X || newYPos != Camera.Position.Y)
                 {
-                    Camera.SetPosition(new Vector2(newXPos, newYPos));
+                    Camera.SetPosition(new Vector2((int) newXPos, (int) newYPos));
                 }
             }
         }
@@ -522,24 +527,22 @@ namespace BobGreenhands.Scenes
             }
             else if (key == Keys.F9)
             {
-                Camera.Zoom = Math.Clamp(Camera.Zoom - CamZoomStep, MinCamZoom, MaxCamZoom);
+                Camera.Zoom = ZoomSteps.ModifyPointer(-1);
                 RecalculateMaxCamPos();
                 if (MathUtils.IsBetween(Camera.Position.X, -_maxCameraXPos, _maxCameraXPos) && MathUtils.IsBetween(Camera.Position.Y, -_maxCameraYPos, _maxCameraYPos))
                 {
                     Camera.Position = Vector2.Zero;
                 }
-                Console.WriteLine(Camera.Zoom);
 
             }
             else if (key == Keys.F10)
             {
-                Camera.Zoom = Math.Clamp(Camera.Zoom + CamZoomStep, MinCamZoom, MaxCamZoom);
+                Camera.Zoom = ZoomSteps.ModifyPointer(1);
                 RecalculateMaxCamPos();
                 if (MathUtils.IsBetween(Camera.Position.X, -_maxCameraXPos, _maxCameraXPos) && MathUtils.IsBetween(Camera.Position.Y, -_maxCameraYPos, _maxCameraYPos))
                 {
                     Camera.Position = Vector2.Zero;
                 }
-                Console.WriteLine(Camera.Zoom);
             }
         }
 
@@ -577,7 +580,7 @@ namespace BobGreenhands.Scenes
                         if(x < 0 || x >= CurrentSavegame.SavegameData.MapWidth || y < 0 || y >= CurrentSavegame.SavegameData.MapWidth)
                             return;
                         TileType tileType = CurrentSavegame.GetTileAt(x, y);
-                        Vector2 target = new Vector2(Camera.MouseToWorldPoint().X, Camera.MouseToWorldPoint().Y);
+                        Vector2 target = new Vector2((int) Camera.MouseToWorldPoint().X, (int) Camera.MouseToWorldPoint().Y);
                         Location location = Location.FromEntityCoordinates(target).SetToCenterOfTile();
                         Action function = () => {if(item.UsedOnTile(x, y, tileType, this)) { RefreshMap(); Hotbar.RefreshTexts(); }};
                         Bob.EnqueueTask(new Task(location.EntityCoordinates, function));
@@ -648,7 +651,7 @@ namespace BobGreenhands.Scenes
         {
             if(CurrentLockedState == LockedState.None && !UIIsBlocking())
             {
-                Vector2 destination = new Vector2(Camera.MouseToWorldPoint().X, Camera.MouseToWorldPoint().Y);
+                Vector2 destination = new Vector2((int) Camera.MouseToWorldPoint().X, (int) Camera.MouseToWorldPoint().Y);;
                 Location location = Location.FromEntityCoordinates(destination);
                 // if mouse is out of bounds
                 if(location.X < 0 || location.X >= CurrentSavegame.SavegameData.MapWidth || location.Y < 0 || location.Y >= CurrentSavegame.SavegameData.MapWidth)

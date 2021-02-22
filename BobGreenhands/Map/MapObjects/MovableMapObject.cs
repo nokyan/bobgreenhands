@@ -42,8 +42,8 @@ namespace BobGreenhands.Map.MapObjects
                     return;
                 }
                 distance.Normalize();
-                distance.X = (float)((distance.X * Speed * 16) * gameTime.ElapsedGameTime.TotalSeconds);
-                distance.Y = (float)((distance.Y * Speed * 16) * gameTime.ElapsedGameTime.TotalSeconds);
+                distance.X = (float)((distance.X * Speed * Game.TextureResolution) * gameTime.ElapsedGameTime.TotalSeconds);
+                distance.Y = (float)((distance.Y * Speed * Game.TextureResolution) * gameTime.ElapsedGameTime.TotalSeconds);
                 Location location = Location.FromEntityCoordinates(Position + distance);
                 // best tile-to-mapobject collision detection system ever, where's my Nobel prize?
                 if(TileAttributes.COLLIDABLES.Contains(PlayScene.CurrentSavegame.GetTileAt((int) location.X, (int) location.Y)))

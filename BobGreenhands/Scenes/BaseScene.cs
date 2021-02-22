@@ -54,7 +54,7 @@ namespace BobGreenhands.Scenes
             base.Initialize();
             UICanvas DebugCanvas = CreateEntity("debug-canvas").AddComponent(new UICanvas());
             DebugCanvas.RenderLayer = DebugRenderLayer;
-            SetDesignResolution(640, 360, SceneResolutionPolicy.FixedHeight, 0, 0);
+            SetDesignResolution(640, 360, SceneResolutionPolicy.FixedHeightPixelPerfect, 0, 0);
             Table debugTable = DebugCanvas.Stage.AddElement(new Table());
             debugTable.SetFillParent(true).Top();
             //debugTable.SetDebug(true);

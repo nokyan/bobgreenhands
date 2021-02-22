@@ -104,8 +104,8 @@ namespace BobGreenhands.Map
                 height = 40;
             }
             Vector2 newVector = new Vector2();
-            newVector.X = (vector.X - width / 2) * Game.TextureResolution;
-            newVector.Y = (vector.Y - height / 2) * Game.TextureResolution;
+            newVector.X = (int) ((vector.X - width / 2f) * Game.TextureResolution);
+            newVector.Y = (int) ((vector.Y - height / 2f) * Game.TextureResolution);
             return newVector;
         }
 
