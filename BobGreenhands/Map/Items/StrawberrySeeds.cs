@@ -9,12 +9,11 @@ namespace BobGreenhands.Map.Items
 {
     public class StrawberrySeeds : BreakableItem
     {
-        public static new readonly int MaxDurability = 30;
-
         public StrawberrySeeds()
         {
             _type = ItemType.StrawberrySeeds;
             Durability = 30;
+            MaxDurability = 30;
         }
 
         public override string? GetInfoText()

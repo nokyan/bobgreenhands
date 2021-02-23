@@ -582,7 +582,7 @@ namespace BobGreenhands.Scenes
                         TileType tileType = CurrentSavegame.GetTileAt(x, y);
                         Vector2 target = new Vector2((int) Camera.MouseToWorldPoint().X, (int) Camera.MouseToWorldPoint().Y);
                         Location location = Location.FromEntityCoordinates(target).SetToCenterOfTile();
-                        Action function = () => {if(item.UsedOnTile(x, y, tileType, this)) { RefreshMap(); Hotbar.RefreshTexts(); }};
+                        Action function = () => {if(item.UsedOnTile(x, y, tileType, this)) { RefreshMap(); Hotbar.Refresh(); }};
                         Bob.EnqueueTask(new Task(location.EntityCoordinates, function));
                         Bob.IsMoving = true;
                     }
@@ -594,7 +594,7 @@ namespace BobGreenhands.Scenes
                         }
                         else
                         {
-                            Action function = () => {item.UsedOnMapObject(blockingMapObject, this); Hotbar.RefreshTexts();};
+                            Action function = () => {item.UsedOnMapObject(blockingMapObject, this); Hotbar.Refresh();};
                             Bob.EnqueueTask(new Task(blockingMapObject.Position, function));
                             Bob.IsMoving = true;
                         }

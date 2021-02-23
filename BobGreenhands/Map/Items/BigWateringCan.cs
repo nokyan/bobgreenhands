@@ -9,7 +9,7 @@ namespace BobGreenhands.Map.Items
 {
     public class BigWateringCan : Item
     {
-        public const int MaxCapacity = 20;
+        public int MaxCapacity = 20;
 
         public int Capacity;
 
@@ -41,7 +41,12 @@ namespace BobGreenhands.Map.Items
 
         public override string? GetInfoString()
         {
-            return "" + Capacity;
+            return "";
+        }
+
+        public override float GetInfoFloat()
+        {
+            return (float) (Capacity/MaxCapacity);
         }
     }
 }

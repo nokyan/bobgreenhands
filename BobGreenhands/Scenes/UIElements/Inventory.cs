@@ -49,12 +49,15 @@ namespace BobGreenhands.Scenes.UIElements
             RebuildTable();
         }
 
-        public void RefreshTexts()
+        public void Refresh()
         {
             foreach (InventoryItem i in _items)
             {
                 if (i != null && !i.IsEmpty)
+                {
                     i.SetText(i.Item.GetInfoString());
+                    i.SetBarFloat(i.Item.GetInfoFloat());
+                }
             }
         }
 

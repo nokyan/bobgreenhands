@@ -11,7 +11,7 @@ namespace BobGreenhands.Scenes.UIElements
     /// <summary>
     /// An Element to use in Inventory UIs
     /// </summary>
-    public class InventoryItem : Stack, IInputListener, ISelectionBlocking
+    public class InventoryItem : VerticalGroup, IInputListener, ISelectionBlocking
     {
         /// <summary>
         /// this font scale is relative to PlayScene.HotbarScale!
@@ -54,6 +54,12 @@ namespace BobGreenhands.Scenes.UIElements
             private set;
         }
 
+        public Image Bar
+        {
+            get;
+            private set;
+        }
+
         public Label Label
         {
             get;
@@ -84,7 +90,9 @@ namespace BobGreenhands.Scenes.UIElements
 
         public InventoryItem(Inventory? inventory, int index, Item? item = null) : base()
         {
+            SetSpacing(1f);
             SetTouchable(Touchable.Enabled);
+            Stack stack = AddElement<Stack>(new Stack());
             PlayScene.SelectionBlockingUIElements.Add(this);
             Index = index;
             Inventory = inventory;
@@ -95,21 +103,36 @@ namespace BobGreenhands.Scenes.UIElements
             Container labelContainer = new Container();
             Label = new Label("", Game.NormalSkin);
             labelContainer.SetElement(Label);
-            labelContainer.SetAlign(Align.BottomRight);
+            labelContainer.SetAlign(Nez.UI.Align.BottomRight);
             Image = new Image();
             Image.SetScale(PlayScene.GUIScale);
             Label.SetFontScale(PlayScene.GUIScale * FontScale);
             Item = item;
-            Add(Image);
-            Add(labelContainer);
-            Add(Selected);
-            Add(Locked);
+            stack.Add(Image);
+            stack.Add(labelContainer);
+            stack.Add(Selected);
+            stack.Add(Locked);
+            AddElement(stack);
+            SetDebug(true);
+            if(item == null)
+                Bar = new Image(new PrimitiveDrawable(0f, 1f, new Color(0, 180, 0)));
+            else
+            {
+                Bar = new Image(new PrimitiveDrawable(item.GetInfoFloat() * 16f, 1f, new Color(0, 180, 0)));
+            }
+            AddElement(Bar);
+            SetAlignment(Align.Left);
             IsEmpty = item == null;
         }
 
         ~InventoryItem()
         {
             PlayScene.SelectionBlockingUIElements.Remove(this);
+        }
+
+        public void SetBarFloat(float newFloat)
+        {
+            Bar.SetDrawable(new PrimitiveDrawable(newFloat * 16f, 1f, new Color(0, 180, 0)));
         }
 
         public bool IsLocked()

@@ -9,12 +9,11 @@ namespace BobGreenhands.Map.Items
 {
     public class Shovel : BreakableItem
     {
-        public static new readonly int MaxDurability = 120;
-
         public Shovel()
         {
             _type = ItemType.Shovel;
             Durability = 120;
+            MaxDurability = 120;
         }
 
         public override string? GetInfoText()

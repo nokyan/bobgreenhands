@@ -7,14 +7,10 @@ namespace BobGreenhands.Map.Items
     public abstract class BreakableItem : Item
     {
         [JsonExclude]
-        public static readonly int MaxDurability;
+        protected int MaxDurability;
 
         [JsonInclude]
-        public int Durability
-        {
-            get;
-            protected set;
-        }
+        protected int Durability;
 
         public BreakableItem()
         {
@@ -23,7 +19,19 @@ namespace BobGreenhands.Map.Items
 
         public override string? GetInfoString()
         {
-            return String.Format("{0}", Durability);
+            return "";
+        }
+
+        public override float GetInfoFloat()
+        {
+            try
+            {
+                return ((float) Durability/MaxDurability);
+            }
+            catch(DivideByZeroException e)
+            {
+                return 0;
+            }
         }
     }
 }
