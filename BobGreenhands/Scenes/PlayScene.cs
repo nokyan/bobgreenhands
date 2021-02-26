@@ -105,6 +105,9 @@ namespace BobGreenhands.Scenes
         public static List<ISelectionBlocking> SelectionBlockingUIElements = new List<ISelectionBlocking>();
 
         public Hotbar Hotbar;
+
+        public BalanceElement BalanceElement;
+
         public static InfoElement InfoElement;
 
         private static readonly Logger _log = LogManager.GetCurrentClassLogger();
@@ -233,6 +236,10 @@ namespace BobGreenhands.Scenes
             Hotbar = new Hotbar();
             SelectionBlockingUIElements.Add(Hotbar);
             table.Add(Hotbar).Left();
+
+            BalanceElement = new BalanceElement(CurrentSavegame.SavegameData.Balance);
+            SelectionBlockingUIElements.Add(BalanceElement);
+            table.Add(BalanceElement).Right().Bottom().SetExpandX();
 
             UpdateSelectedThing();
 

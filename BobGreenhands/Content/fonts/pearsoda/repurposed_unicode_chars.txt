@@ -4,3 +4,4 @@ The following Unicode characters have been repurposed:
 힤: Water Icon
 힥: Fertilizer Icon
 힦: Growth Icon
+힧: Money Icon
