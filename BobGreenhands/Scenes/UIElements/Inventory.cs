@@ -11,12 +11,8 @@ namespace BobGreenhands.Scenes.UIElements
     /// <summary>
     /// Generic and dynamic Element to use as an inventory interface
     /// </summary>
-    public class Inventory : Stack, IInputListener, ISelectionBlocking
+    public class Inventory : Table, IInputListener, ISelectionBlocking
     {
-        public Image Background;
-
-        public Table Table = new Table();
-
         public int Columns;
         
         public int Rows;
@@ -30,9 +26,7 @@ namespace BobGreenhands.Scenes.UIElements
         public Inventory(Texture2D texture, int columns, int rows, params Item[] items)
         {
             SetTouchable(Touchable.Enabled);
-            Background = new Image(texture, Scaling.Stretch);
-            Background.SetScale(PlayScene.GUIScale);
-            Add(Background);
+            SetBackground(new SpriteDrawable(texture));
             Columns = columns;
             Rows = rows;
             // populate the internal list with first all the available items, then with empty InventoryItems
@@ -63,18 +57,16 @@ namespace BobGreenhands.Scenes.UIElements
 
         public void RebuildTable()
         {
-            Table.Remove();
-            Table = new Table();
-            Table.Left();
-            Table.Pad(4f * PlayScene.GUIScale);
+            Remove();
+            Left();
+            Pad(4f * PlayScene.GUIScale);
             for (int x = 0; x < _items.Count; x++)
             {
                 // if we reached the end of a row, start a new row
                 if (x != 0 && x % Columns == 0)
-                Table.Row();
-                Table.Add(_items[x]).Space(4f * PlayScene.GUIScale);
+                Row();
+                Add(_items[x]).Space(4f * PlayScene.GUIScale);
             }
-            Add(Table);
         }
 
         public void AddItem(Item item)
