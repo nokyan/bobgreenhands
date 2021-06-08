@@ -70,7 +70,7 @@ namespace BobGreenhands.Scenes
                 double fps = Math.Round(1 / Time.DeltaTime, 0);
                 StringBuilder builder = new StringBuilder();
                 builder.AppendFormat("FPS: {0}\n", fps);
-                builder.AppendFormat("Delta: {0:0.000000}ms\n", Time.DeltaTime);
+                builder.AppendFormat("Delta: {0:0.000000}ms\n", (Time.DeltaTime*1000));
                 builder.AppendFormat("Scene: {0}\n", Game.Scene.ToString());
                 builder.AppendFormat("Resolution: {0}x{1}\n", Screen.Width, Screen.Height);
                 builder.AppendFormat("OS: {0}\n", Program.OSInformation);
