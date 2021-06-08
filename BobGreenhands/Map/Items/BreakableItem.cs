@@ -1,5 +1,7 @@
+using Microsoft.VisualBasic.CompilerServices;
 using System;
 using Nez.Persistence;
+using BobGreenhands.Utils;
 
 
 namespace BobGreenhands.Map.Items
@@ -26,7 +28,7 @@ namespace BobGreenhands.Map.Items
         {
             try
             {
-                return ((float) Durability/MaxDurability);
+                return Math.Clamp(((float) Durability/MaxDurability), 0, 1);
             }
             catch(DivideByZeroException e)
             {
