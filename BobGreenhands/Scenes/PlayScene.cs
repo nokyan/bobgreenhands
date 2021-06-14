@@ -27,7 +27,6 @@ namespace BobGreenhands.Scenes
         public enum LockedState
         {
             None,
-            TileLocked,
             MapObjectLocked,
             ItemLocked
         }
@@ -75,11 +74,6 @@ namespace BobGreenhands.Scenes
                     case LockedState.None:
                         CamPosLocked = false;
                         _selectedTileSpriteRenderer.Sprite = SelectedTileSprite;
-                        _selectedMapObjectRenderer.Sprite = SelectedTileSprite;
-                        break;
-                    case LockedState.TileLocked:
-                        CamPosLocked = true;
-                        _selectedTileSpriteRenderer.Sprite = LockedTileSprite;
                         _selectedMapObjectRenderer.Sprite = SelectedTileSprite;
                         break;
                     case LockedState.ItemLocked:
@@ -564,13 +558,8 @@ namespace BobGreenhands.Scenes
             switch(CurrentLockedState)
             {
                 case LockedState.None:
-                    if(GetBlockingMapObject() == null)
-                        CurrentLockedState = LockedState.TileLocked;
-                    else 
+                    if(GetBlockingMapObject() != null)
                         CurrentLockedState = LockedState.MapObjectLocked;
-                    break;
-                case LockedState.TileLocked:
-                    CurrentLockedState = LockedState.None;
                     break;
                 case LockedState.MapObjectLocked:
                     CurrentLockedState = LockedState.None;
