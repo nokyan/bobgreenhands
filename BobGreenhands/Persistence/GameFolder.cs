@@ -78,7 +78,6 @@ namespace BobGreenhands.Persistence
                 _log.Info(String.Format("Found a savegame: {0}", s));
                 Savegames.Add(new Savegame(s));
             }
-            Savegames.Sort();
         }
     }
 }
