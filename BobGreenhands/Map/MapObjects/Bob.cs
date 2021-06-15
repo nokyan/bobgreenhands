@@ -97,7 +97,7 @@ namespace BobGreenhands.Map.MapObjects
 
         public override string GetInfoText()
         {
-            return Language.Translate("bobInfoText");
+            return Language.Translate("mapobject.bob.name") + "\n" + Language.Translate("mapobject.bob.description");
         }
     }
 }

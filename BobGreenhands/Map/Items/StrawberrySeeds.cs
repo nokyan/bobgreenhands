@@ -18,7 +18,7 @@ namespace BobGreenhands.Map.Items
 
         public override string? GetInfoText()
         {
-            return String.Format("{0}\n{1}", Language.Translate("strawberrySeeds"),  Language.Translate("amount", "" + Durability, "" + MaxDurability));
+            return String.Format("{0}\n{1}", Language.Translate("item.strawberrySeeds.name"),  Language.Translate("game.quickInfo.amount", "" + Durability, "" + MaxDurability));
         }
 
         public override bool UsedOnTile(int tileX, int tileY, TileType tile, PlayScene playScene)

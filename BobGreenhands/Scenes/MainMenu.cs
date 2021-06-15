@@ -41,24 +41,24 @@ namespace BobGreenhands.Scenes
 
             _table.Row().SetPadTop(NormalSkin.OuterSpacing);
 
-            _table.Add(new Label(Language.Translate("slogan"), Game.NormalSkin).SetFontScale(NormalSkin.HeadlineFontScale));
+            _table.Add(new Label(Language.Translate("mainMenu.slogan"), Game.NormalSkin).SetFontScale(NormalSkin.HeadlineFontScale));
 
             _table.Row().SetPadTop(3 * NormalSkin.OuterSpacing);
 
-            TextButton playButton = _table.Add(new TextButton(Language.Translate("play"), Game.NormalSkin)).GetElement<TextButton>();
+            TextButton playButton = _table.Add(new TextButton(Language.Translate("mainMenu.play"), Game.NormalSkin)).GetElement<TextButton>();
             playButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             _table.Row().SetPadTop(NormalSkin.OuterSpacing);
-            TextButton settingsButton = _table.Add(new TextButton(Language.Translate("settings"), Game.NormalSkin)).GetElement<TextButton>();
+            TextButton settingsButton = _table.Add(new TextButton(Language.Translate("mainMenu.settings"), Game.NormalSkin)).GetElement<TextButton>();
             settingsButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             _table.Row().SetPadTop(NormalSkin.OuterSpacing);
-            TextButton exitButton = _table.Add(new TextButton(Language.Translate("exit"), Game.NormalSkin)).GetElement<TextButton>();
+            TextButton exitButton = _table.Add(new TextButton(Language.Translate("mainMenu.exit"), Game.NormalSkin)).GetElement<TextButton>();
             exitButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             _table.Row().Expand();
 
 
             Table lowerTable = new Table();
             _table.Add(lowerTable).Bottom().Pad(NormalSkin.OuterSpacing).Expand().Fill().GetMaxWidth();
-            TextButton creditsButton = new TextButton(Language.Translate("credits"), Game.NormalSkin);
+            TextButton creditsButton = new TextButton(Language.Translate("mainMenu.credits"), Game.NormalSkin);
             creditsButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             Container creditsButtonContainer = lowerTable.Add(new Container(creditsButton)).Expand().Left().Bottom().GetElement<Container>();
             Label versionLabel = new Label(Program.Version.ToString(), Game.NormalSkin);

@@ -38,11 +38,11 @@ namespace BobGreenhands.Scenes
             Table table = UICanvas.Stage.AddElement(new Table());
             table.SetFillParent(true);
             table.Pad(NormalSkin.OuterSpacing);
-            table.Add(new Label(Language.Translate("newSavegame"), Game.NormalSkin).SetWrap(true).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX().SetSpaceBottom(NormalSkin.OuterSpacing);
+            table.Add(new Label(Language.Translate("playMenu.new.title"), Game.NormalSkin).SetWrap(true).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX().SetSpaceBottom(NormalSkin.OuterSpacing);
             table.Row();
-            table.Add(new Label(Language.Translate("giveName"), Game.NormalSkin).SetWrap(true).SetFontScale(NormalSkin.NormalFontScale)).SetFillX().Space(NormalSkin.OuterSpacing);
+            table.Add(new Label(Language.Translate("playMenu.new.giveName"), Game.NormalSkin).SetWrap(true).SetFontScale(NormalSkin.NormalFontScale)).SetFillX().Space(NormalSkin.OuterSpacing);
             table.Row();
-            table.Add(new Label(Language.Translate("location", Game.GameFolder.SavegamesFolder), Game.NormalSkin).SetWrap(true).SetAlignment(Align.TopLeft).SetFontScale(NormalSkin.NormalFontScale)).SetFillX().Top().Space(NormalSkin.OuterSpacing);
+            table.Add(new Label(Language.Translate("playMenu.new.location", Game.GameFolder.SavegamesFolder), Game.NormalSkin).SetWrap(true).SetAlignment(Align.TopLeft).SetFontScale(NormalSkin.NormalFontScale)).SetFillX().Top().Space(NormalSkin.OuterSpacing);
             table.Row();
 
             _textField = new Nez.UI.TextField("", Game.NormalSkin);
@@ -54,17 +54,17 @@ namespace BobGreenhands.Scenes
 
             Table buttonTable = table.Add(new Table()).SetSpaceBottom(NormalSkin.OuterSpacing).SetExpandX().Bottom().GetElement<Table>();
 
-            _createButton = new TextButton(Language.Translate("create"), Game.NormalSkin);
+            _createButton = new TextButton(Language.Translate("playMenu.new.create"), Game.NormalSkin);
             _createButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             buttonTable.Add(_createButton).SetExpandX().Bottom().Right().Space(NormalSkin.Spacing);
             _createButton.OnClicked += CreateButton_onClicked;
 
-            _createAndPlayButton = new TextButton(Language.Translate("createAndPlay"), Game.NormalSkin);
+            _createAndPlayButton = new TextButton(Language.Translate("playMenu.new.createAndPlay"), Game.NormalSkin);
             _createAndPlayButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             buttonTable.Add(_createAndPlayButton).Bottom().Right().Space(NormalSkin.Spacing);
             _createAndPlayButton.OnClicked += CreateAndPlayButton_onClicked;
 
-            _backButton = new TextButton(Language.Translate("back"), Game.NormalSkin);
+            _backButton = new TextButton(Language.Translate("gui.back"), Game.NormalSkin);
             _backButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             buttonTable.Add(_backButton).Bottom().Right().Space(NormalSkin.Spacing);
             _backButton.OnClicked += BackButton_onClicked;
@@ -81,7 +81,7 @@ namespace BobGreenhands.Scenes
             // check if name is empty
             if(_realFilename == "")
             {
-                SetErrorMessage(Language.Translate("pleaseEnterAName"));
+                SetErrorMessage(Language.Translate("playMenu.new.pleaseEnterName"));
                 return null;
             }
             // check if name has illegal characters
@@ -89,7 +89,7 @@ namespace BobGreenhands.Scenes
             {
                 if(_realFilename.Contains(c))
                 {
-                    SetErrorMessage(Language.Translate("illegalChars"));
+                    SetErrorMessage(Language.Translate("playMenu.new.nameIllegalChars"));
                     return null;
                 }
             }
@@ -98,7 +98,7 @@ namespace BobGreenhands.Scenes
             {
                 if (_realFilename.Replace(".bgs", "").ToUpper().Equals(s))
                 {
-                    SetErrorMessage(Language.Translate("illegalChars"));
+                    SetErrorMessage(Language.Translate("playMenu.new.nameIllegalChars"));
                     return null;
                 }
             }
@@ -107,7 +107,7 @@ namespace BobGreenhands.Scenes
             {
                 if (s.Path == Path.Combine(Game.GameFolder.SavegamesFolder, _realFilename))
                 {
-                    SetErrorMessage(Language.Translate("alreadyExists"));
+                    SetErrorMessage(Language.Translate("playMenu.new.nameAlreadyExists"));
                     return null;
                 }
             }

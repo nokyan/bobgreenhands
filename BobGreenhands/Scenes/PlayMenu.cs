@@ -25,9 +25,9 @@ namespace BobGreenhands.Scenes
             Background = new PrimitiveDrawable(new Color(0, 0, 0, 160))
         });
 
-        private TextButton _playButton = new TextButton(Language.Translate("play"), Game.NormalSkin);
-        private TextButton _renameButton = new TextButton(Language.Translate("rename"), Game.NormalSkin);
-        private TextButton _deleteButton = new TextButton(Language.Translate("delete"), Game.NormalSkin);
+        private TextButton _playButton = new TextButton(Language.Translate("mainMenu.play"), Game.NormalSkin);
+        private TextButton _renameButton = new TextButton(Language.Translate("playMenu.rename"), Game.NormalSkin);
+        private TextButton _deleteButton = new TextButton(Language.Translate("playMenu.delete"), Game.NormalSkin);
 
         // this will come in handy when we work with files that have characters in their names that have been filtered out
         private Dictionary<string, string> _realFileNames = new Dictionary<string, string>();
@@ -42,7 +42,7 @@ namespace BobGreenhands.Scenes
             
             _table = UICanvas.Stage.AddElement(new Table());
             _table.SetFillParent(true);
-            _table.Add(new Label(Language.Translate("selectSavegame"), Game.NormalSkin).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX().SetPadTop(NormalSkin.OuterSpacing).SetPadRight(NormalSkin.OuterSpacing).SetPadLeft(NormalSkin.OuterSpacing);
+            _table.Add(new Label(Language.Translate("playMenu.title"), Game.NormalSkin).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX().SetPadTop(NormalSkin.OuterSpacing).SetPadRight(NormalSkin.OuterSpacing).SetPadLeft(NormalSkin.OuterSpacing);
             _table.Row();
 
             RefreshList();
@@ -65,11 +65,11 @@ namespace BobGreenhands.Scenes
             _table.Row();
 
             Table bottomButtonTable = _table.Add(new Table()).SetExpandX().SetFillX().SetPadBottom(NormalSkin.OuterSpacing).GetElement<Table>();
-            TextButton newButton = bottomButtonTable.Add(new TextButton(Language.Translate("new"), Game.NormalSkin)).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
+            TextButton newButton = bottomButtonTable.Add(new TextButton(Language.Translate("playMenu.new"), Game.NormalSkin)).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
             newButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
-            TextButton refreshButton = bottomButtonTable.Add(new TextButton(Language.Translate("refresh"), Game.NormalSkin)).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
+            TextButton refreshButton = bottomButtonTable.Add(new TextButton(Language.Translate("playMenu.refresh"), Game.NormalSkin)).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
             refreshButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
-            TextButton backButton = bottomButtonTable.Add(new TextButton(Language.Translate("back"), Game.NormalSkin)).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
+            TextButton backButton = bottomButtonTable.Add(new TextButton(Language.Translate("gui.back"), Game.NormalSkin)).Space(NormalSkin.Spacing).SetFillX().GetElement<TextButton>();
             backButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
 
             newButton.OnClicked += NewButton_onClicked;

@@ -24,19 +24,19 @@ namespace BobGreenhands.Scenes
             Table table = UICanvas.Stage.AddElement(new Table());
             table.SetFillParent(true);
             table.Pad(NormalSkin.OuterSpacing);
-            table.Add(new Label(Language.Translate("deletionWindowTitle"), Game.NormalSkin).SetWrap(true).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX().SetSpaceBottom(NormalSkin.OuterSpacing);
+            table.Add(new Label(Language.Translate("playMenu.delete.title"), Game.NormalSkin).SetWrap(true).SetFontScale(NormalSkin.HeadlineFontScale)).SetFillX().SetExpandX().SetSpaceBottom(NormalSkin.OuterSpacing);
             table.Row();
-            table.Add(new Label(Language.Translate("deletionConfirm", cleanFilename), Game.NormalSkin).SetAlignment(Align.TopLeft).SetWrap(true).SetFontScale(NormalSkin.NormalFontScale)).Fill().Expand().Top().Space(NormalSkin.OuterSpacing);
+            table.Add(new Label(Language.Translate("playMenu.delete.deletionConfirm", cleanFilename), Game.NormalSkin).SetAlignment(Align.TopLeft).SetWrap(true).SetFontScale(NormalSkin.NormalFontScale)).Fill().Expand().Top().Space(NormalSkin.OuterSpacing);
             table.Row();
 
             Table buttonTable = table.Add(new Table()).SetSpaceBottom(NormalSkin.OuterSpacing).SetExpandX().GetElement<Table>();
 
-            TextButton yesButton = new TextButton(Language.Translate("yes"), Game.NormalSkin);
+            TextButton yesButton = new TextButton(Language.Translate("gui.yes"), Game.NormalSkin);
             yesButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             buttonTable.Add(yesButton).SetExpandX().Bottom().Right().Space(NormalSkin.Spacing);
             yesButton.OnClicked += YesButton_onClicked;
 
-            TextButton noButton = new TextButton(Language.Translate("no"), Game.NormalSkin);
+            TextButton noButton = new TextButton(Language.Translate("gui.no"), Game.NormalSkin);
             noButton.GetLabel().SetFontScale(NormalSkin.NormalFontScale);
             buttonTable.Add(noButton).Bottom().Right().Space(NormalSkin.Spacing);
             noButton.OnClicked += NoButton_onClicked;
